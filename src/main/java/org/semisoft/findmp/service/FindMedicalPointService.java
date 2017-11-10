@@ -8,6 +8,7 @@ public class FindMedicalPointService
 {
     public ArrayList<MedicalPoint> findMedicalPoints(int count)
     {
+        //all the magic would go here
         return new ArrayList<>();
     }
 }

@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+Implementation-Title: find-medical-point
+Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Radek
+Implementation-Vendor-Id: org.semisoft
 Created-By: IntelliJ IDEA
 Build-Jdk: 1.8.0_151
+Main-Class: ${start-class}
 

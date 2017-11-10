@@ -1,10 +1,27 @@
 package org.semisoft.findmp.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Adress
 {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String city;
     private String street;
     private String number;
+
+    public Adress() {}
+
+    public Adress(String city, String street, String number)
+    {
+        this.city = city;
+        this.street = street;
+        this.number = number;
+    }
 
     public String getCity()
     {
