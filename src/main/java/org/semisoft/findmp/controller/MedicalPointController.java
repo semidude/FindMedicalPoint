@@ -36,6 +36,19 @@ public class MedicalPointController
         MedicalPoint medicalPoint = new MedicalPoint(
                 name, new Adress(adressParts[0], adressParts[1], adressParts[2]), type);
         medicalPointRepository.save(medicalPoint);
-        return "Saved successfully";
+        return "Saved successfully!";
     }
+
+    @RequestMapping("/removemp")
+    public @ResponseBody String removeMedicalPoint(@RequestParam long ID)
+    {
+        //example path: http://localhost:8080/removemp?ID=1
+        MedicalPoint medPoint = medicalPointRepository.findOne(ID);
+        if(medPoint!=null) {
+            medicalPointRepository.delete(ID);
+            return "Deleted succesfully!";
+        }
+        else return "No such ID.";
+    }
+
 }

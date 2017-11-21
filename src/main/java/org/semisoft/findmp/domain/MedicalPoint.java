@@ -1,26 +1,26 @@
 package org.semisoft.findmp.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 public class MedicalPoint
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private ArrayList<MedicalPointUnit> units;
     @OneToOne(cascade = CascadeType.ALL)
     private Adress adress;
-    private String type;
-
-    public MedicalPoint() {}
 
     public MedicalPoint(String name, Adress adress, String type)
     {
         this.name = name;
         this.adress = adress;
-        this.type = type;
     }
+
+    public MedicalPoint() {}
 
     public Long getId()
     {
@@ -45,13 +45,5 @@ public class MedicalPoint
     public void setAdress(Adress adress)
     {
         this.adress = adress;
-    }
-    public String getType()
-    {
-        return type;
-    }
-    public void setType(String type)
-    {
-        this.type = type;
     }
 }
