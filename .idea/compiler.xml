@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FindMedicalPoint" />
+        <module name="find-medical-point" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="FindMedicalPoint" target="1.8" />
+      <module name="find-medical-point" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
