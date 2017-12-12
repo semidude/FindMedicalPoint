@@ -1,11 +1,30 @@
 package org.semisoft.findmp.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
+@Entity
 public class Specialization
 {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String name;
-    private Set<String> keywords;
+    @OneToMany
+    private Set<Keyword> keywords;
+
+    public Specialization(String name)
+    {
+        this.name = name;
+    }
+
+    public Specialization()
+    {
+        this.name = "";
+    }
 
     public String getName()
     {
@@ -15,12 +34,16 @@ public class Specialization
     {
         this.name = name;
     }
-    public Set<String> getKeywords()
+    public Set<Keyword> getKeywords()
     {
         return keywords;
     }
-    public void setKeywords(Set<String> keywords)
+    public void addKeyword(Keyword keyword)
     {
-        this.keywords = keywords;
+        keywords.add(keyword);
+    }
+    public void addAllKeywords(Set<Keyword> keywords)
+    {
+        this.keywords.addAll(keywords);
     }
 }

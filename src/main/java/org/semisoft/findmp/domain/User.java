@@ -2,14 +2,14 @@ package org.semisoft.findmp.domain;
 
 public class User
 {
-    private Localization localization;
+    private Location location;
 
-    public Localization getLocalization()
+    public Location getLocation()
     {
-        return localization;
+        return location;
     }
-    public void setLocalization(Localization localization)
+    public void setLocation(Location location)
     {
-        this.localization = localization;
+        this.location = location;
     }
 }
