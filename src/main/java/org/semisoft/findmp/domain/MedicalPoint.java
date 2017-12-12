@@ -19,6 +19,10 @@ public class MedicalPoint
         this.name = name;
         this.adress = adress;
     }
+    public MedicalPoint(String name)
+    {
+        this.name = name;
+    }
 
     public MedicalPoint() {}
 

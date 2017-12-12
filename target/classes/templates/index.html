@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Find Medical Point</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"/>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" type="text/css" th:href="@{/css/bootstrap.css}" /> -->
+    <script type="text/javascript" src="webapp/static/app/angular.min.js" th:src="@{/static/app/angular.min.js}"></script>
+    <script type="text/javascript" src="webapp/static/app/static/app.module.js" th:src="@{/static/app/app.module.js}"></script>
+    <script type="text/javascript" src="webapp/static/app/medicalPoints.controller.js" th:src="@{/static/app/medicalPoints.controller.js}"></script>
+
+<script>
+    alert('cos ladnego');
+</script>
+
+</head>
+<body ng-app="app" ng-controller="MedicalPointsController as vm">
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Find Medical Point app</a>
+            </div>
+            <p class="navbar-text navbar-right" th:text="'Signed in as ' + ${username}" style="margin-right: 10px;">Signed in as Anonymus</p>
+        </div>
+    </nav>
+</header>
+
+<div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+
+            <div class="btn-group" role="group">
+                <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
+            </div>
+            Adding medical points:
+            <input type = "text" placeholder="name" ng-model="nameText" />
+            <input type = "text" placeholder="city" ng-model="cityText" />
+            <input type = "text" placeholder="street" ng-model="streetText" />
+            <input type = "text" placeholder="number" ng-model="numberText" />
+            <input type = "text" placeholder="type" ng-model="typeText" />
+
+            <button ng-click="vm.addMedicalPoint(nameText, typeText, cityText, streetText, numberText)" type="button" class="btn btn-default">Add</button>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name
+                        <input type = "text" placeholder="search" ng-model="nameSearch.name" /> </th>
+                    <th>City
+                        <input type = "text" placeholder="search" ng-model="adressSearch.adress.city" /> <br/>
+                    Street
+                        <input type = "text" placeholder="search" ng-model="adressSearch.adress.street" /><br/>
+                    Number
+                        <input type = "text" placeholder="search" ng-model="adressSearch.adress.number" /></th>
+                    <th style="width: 90px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="medicalPoint in vm.medicalPoints  | filter: nameSearch | filter: adressSearch">
+                    <td>{{medicalPoint.name}}</td>
+                    <td>{{medicalPoint.adress.city}} {{medicalPoint.adress.street}} {{medicalPoint.adress.number}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="vm.deleteMedicalPoint(medicalPoint.id)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<footer class="footer" style="position: absolute; bottom:0;background-color: #f5f5f5; width: 100%">
+    <div class="container">
+        <p th:text="${#dates.format(datetime, 'dd MMM yyyy HH:mm')}"  class="text-muted">Page was rendered today.</p>
+    </div>
+</footer>
+
+</body>
+</html>

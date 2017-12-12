@@ -5,29 +5,51 @@ import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/medicalPoints")
 public class MedicalPointController
 {
     @Autowired
     private MedicalPointRepository medicalPointRepository;
+    private List<MedicalPoint> medicalPointsList;
+
+    public MedicalPointController()
+    {
+        medicalPointsList = new ArrayList<>();
+
+        medicalPointsList.add(new MedicalPoint("Marriot"));
+        medicalPointsList.add(new MedicalPoint("Holender"));
+        medicalPointsList.add(new MedicalPoint("Kimono"));
+    }
+
 
     /** Find most appropriate medical points for given illness and localization **/
-    @RequestMapping("/findmp")
-    public @ResponseBody Iterable<MedicalPoint> findMedicalPoints()
+    @RequestMapping(value = "/findmp", method = RequestMethod.GET)
+    public Iterable<MedicalPoint> findMedicalPoints()
     {
         //for now, just show them all
         //in the future FindMedicalPointService.findMedicalPoints() would go here
-        return medicalPointRepository.findAll();
+         return medicalPointRepository.findAll();
+    }
+
+    @RequestMapping(value = "/findmp2", method = RequestMethod.GET)
+    public List<MedicalPoint> findMedicalPoints2()
+    {
+        //for now, just show them all
+        //in the future FindMedicalPointService.findMedicalPoints() would go here
+        return medicalPointsList;
     }
 
     /** A method for manually adding medical points to the database,
      *  could be used from the medical point's register form **/
-    @RequestMapping("/addmp")
+    @RequestMapping(value ="/addmp", method = RequestMethod.POST)
     public @ResponseBody String addMedicalPoint(@RequestParam String name, @RequestParam String adress, @RequestParam String type)
     {
         //example path: http://localhost:8080/addmp?name=Fajna+Przychodnia&type=Ortopeda&adress=Warszawa;Ksiecia+Janusza;39
@@ -39,7 +61,7 @@ public class MedicalPointController
         return "Saved successfully!";
     }
 
-    @RequestMapping("/removemp")
+    @RequestMapping(value = "/removemp", method = RequestMethod.POST)
     public @ResponseBody String removeMedicalPoint(@RequestParam long ID)
     {
         //example path: http://localhost:8080/removemp?ID=1
