@@ -1,17 +1,17 @@
 package org.semisoft.findmp.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class MedicalPointUnit
 {
     @Id
     @GeneratedValue
     private Long Id;
     private String name;
-    private Specialization specialization;
     @OneToOne
+    private Specialization specialization;
+    @ManyToOne
     private MedicalPoint medicalPoint;
 
     public Long getId()

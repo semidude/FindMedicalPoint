@@ -2,6 +2,8 @@ package org.semisoft.findmp.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class MedicalPoint
@@ -10,14 +12,21 @@ public class MedicalPoint
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private ArrayList<MedicalPointUnit> units;
+    @OneToMany
+    private List<MedicalPointUnit> units;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Address address;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Specialization specialization;
     @OneToOne(cascade = CascadeType.ALL)
-    private Adress adress;
+    private Sector sector;
 
-    public MedicalPoint(String name, Adress adress, String type)
+    public MedicalPoint(String name, Specialization specialization, Address address)
     {
         this.name = name;
-        this.adress = adress;
+        this.specialization = specialization;
+        this.address = address;
+        sector = Sector.fromLocation(Location.fromAddress(address));
     }
     public MedicalPoint(String name)
     {
@@ -42,12 +51,34 @@ public class MedicalPoint
     {
         this.name = name;
     }
-    public Adress getAdress()
+    public Address getAddress()
     {
-        return adress;
+        return address;
     }
-    public void setAdress(Adress adress)
+    public void setAddress(Address address)
     {
-        this.adress = adress;
+        this.address = address;
+    }
+    public List<MedicalPointUnit> getUnits() {
+        return units;
+    }
+    public void addUnit(MedicalPointUnit unit) {
+        units.add(unit);
+    }
+    public Specialization getSpecialization()
+    {
+        return specialization;
+    }
+    public void setSpecialization(Specialization specialization)
+    {
+        this.specialization = specialization;
+    }
+    public Sector getSector()
+    {
+        return sector;
+    }
+    public void setSector(Sector sector)
+    {
+        this.sector = sector;
     }
 }
