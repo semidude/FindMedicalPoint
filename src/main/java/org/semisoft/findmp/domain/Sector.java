@@ -1,11 +1,5 @@
 package org.semisoft.findmp.domain;
 
-<<<<<<< HEAD
-public class Sector
-{
-    int x;
-    int y;
-=======
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -117,5 +111,4 @@ public class Sector
     {
         return "(" + x + ", " + y + ")";
     }
->>>>>>> geolocation-and-FindMedicalPointService
 }

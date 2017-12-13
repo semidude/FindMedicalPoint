@@ -44,7 +44,7 @@ public class MedicalPointController
         //for now, just show them all
         //in the future FindMedicalPointService.findMedicalPoints() would go here
         return medicalPointsList;
-
+    }
     
     /** Find most appropriate medical points for given illness and localization **/
     @RequestMapping("/findmp")
