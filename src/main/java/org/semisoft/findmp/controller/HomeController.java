@@ -14,14 +14,15 @@ import java.util.Date;
 @RequestMapping("/")
 public class HomeController
 {
-    @RequestMapping(method = RequestMethod.GET)
-    ModelAndView home()    
+    @RequestMapping("/")
+    ModelAndView home()
     {
         ModelAndView model = new ModelAndView("index");
         model.addObject("datetime", new Date());
         model.addObject("username", "Semisoft");
         model.addObject("mode", "development");
         return model;
+//        return "Witam";
     }
 
     @RequestMapping("/showloc")

@@ -39,9 +39,9 @@
                 });
             }
 
-            function addMedicalPoint(name, type, city, street, number)
+            function addMedicalPoint(name, specialization, city, street, number)
             {
-                var url = "/medicalPoints/addmp?name="+name+"&type="+type+"&adress="+city+";"+street+";"+number
+                var url = "/medicalPoints/addmp?name="+name+"&specialization="+specialization+"&adress="+city+";"+street+";"+number
                 $http.post(url).then(function(response)
                 {
                     vm.medicalPoints = response.data;
