@@ -16,9 +16,13 @@ import java.util.stream.Collectors;
 @Service
 public class FindMedicalPointService
 {
-    @Autowired
     private MedicalPointRepository medicalPointRepository;
     private Location userLocation;
+
+    @Autowired
+    public FindMedicalPointService(MedicalPointRepository medicalPointRepository) {
+        this.medicalPointRepository = medicalPointRepository;
+    }
 
     //TODO change to MedicalPointUnits
     public ArrayList<MedicalPoint> findMedicalPoints(Specialization specialization, double latitude, double longitude)
@@ -39,6 +43,8 @@ public class FindMedicalPointService
 
         List<Sector> sectors = new ArrayList<>();
         Sector.SectorCorner corner = sector.getLocationSectorCorner(userLocation);
+
+        sectors.add(sector);
 
         switch (corner)
         {
@@ -69,16 +75,22 @@ public class FindMedicalPointService
 
     private ArrayList<MedicalPoint> findClosestMedicalPointsInSectors(List<Sector> sectors, Specialization specialization)
     {
-        //TODO test findClosestMedicalPointsInSectors
         ArrayList<MedicalPoint> medicalPoints = new ArrayList<>();
 
         for (Sector sector : sectors)
+        {
             //get all medical points from given sector of given specialization
+            Collection<MedicalPoint> medicalPointsInSector =
+                    (Collection<MedicalPoint>) medicalPointRepository.findBySector(sector);
+
+            if (medicalPointsInSector == null || medicalPointsInSector.isEmpty()) continue;
+
             medicalPoints.addAll(
-                    ((Collection<MedicalPoint>) medicalPointRepository.findBySector(sector))
-                            .stream()
-                            .filter(m -> m.getSpecialization().equals(specialization))
-                            .collect(Collectors.toList()));
+                    medicalPointsInSector
+                    .stream()
+                    .filter(m -> m.getSpecialization().equals(specialization))
+                    .collect(Collectors.toList()));
+        }
 
         medicalPoints.sort((m1, m2) ->
         {
@@ -90,6 +102,6 @@ public class FindMedicalPointService
             else return 0;
         });
 
-        return new ArrayList<>(medicalPoints.subList(0, 4));
+        return medicalPoints;
     }
 }

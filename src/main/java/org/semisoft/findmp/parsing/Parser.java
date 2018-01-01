@@ -1,23 +1,17 @@
 package org.semisoft.findmp.parsing;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 
-import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.MedicalPoint;
@@ -25,9 +19,6 @@ import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.FileNotFoundException;
-import java.util.Iterator;
 
 @Service
 public class Parser {

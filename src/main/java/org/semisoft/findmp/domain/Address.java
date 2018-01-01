@@ -29,6 +29,11 @@ public class Address
         return city + " " + street + " " + number;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return this.toString().equals(o.toString());
+    }
+
     public String getCity()
     {
         return city;

@@ -46,4 +46,10 @@ public class Specialization
     {
         this.keywords.addAll(keywords);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Specialization other = (Specialization) o;
+        return name.equals(other.getName());
+    }
 }

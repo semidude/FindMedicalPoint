@@ -1,6 +1,8 @@
-package org.semisoft.findmp.domain;
+package org.semisoft.findmp.unit.domain;
 
 import org.junit.jupiter.api.Test;
+import org.semisoft.findmp.domain.Location;
+import org.semisoft.findmp.domain.Sector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +15,7 @@ class SectorTest
 
         Sector sector = Sector.fromLocation(location);
 
-        assertEquals(29, sector.getX());
-        assertEquals(116, sector.getY());
+        assertEquals(143, sector.getX());
+        assertEquals(578, sector.getY());
     }
 }

@@ -35,7 +35,11 @@ public class Location
         {
             return new Location(0,0);
         }
-        return new Location( results[0].geometry.location.lat, results[0].geometry.location.lng );
+
+        if (results.length > 0)
+            return new Location( results[0].geometry.location.lat, results[0].geometry.location.lng );
+        else
+            return new Location(0,0);
     }
 
     public static double calculateDistance(Location location1, Location location2)

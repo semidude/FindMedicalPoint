@@ -1,9 +1,6 @@
 package org.semisoft.findmp.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class MedicalPoint
@@ -12,8 +9,6 @@ public class MedicalPoint
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany
-    private List<MedicalPointUnit> units;
     @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -59,12 +54,6 @@ public class MedicalPoint
     {
         this.address = address;
     }
-    public List<MedicalPointUnit> getUnits() {
-        return units;
-    }
-    public void addUnit(MedicalPointUnit unit) {
-        units.add(unit);
-    }
     public Specialization getSpecialization()
     {
         return specialization;
@@ -80,5 +69,14 @@ public class MedicalPoint
     public void setSector(Sector sector)
     {
         this.sector = sector;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        MedicalPoint other = (MedicalPoint) o;
+        return name.equals(other.getName()) &&
+                specialization.equals(other.getSpecialization()) &&
+                address.equals(other.getAddress()) &&
+                sector.equals(other.getSector());
     }
 }

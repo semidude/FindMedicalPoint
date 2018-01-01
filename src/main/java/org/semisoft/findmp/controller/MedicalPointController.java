@@ -2,13 +2,11 @@ package org.semisoft.findmp.controller;
 
 import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.MedicalPoint;
-import org.semisoft.findmp.domain.Sector;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.domain.repository.SectorRepository;
 import org.semisoft.findmp.parsing.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/medicalPoints")
