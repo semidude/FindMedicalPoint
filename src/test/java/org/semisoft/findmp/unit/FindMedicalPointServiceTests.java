@@ -123,7 +123,6 @@ public class FindMedicalPointServiceTests {
     }
 
     private List<MedicalPoint> findMedicalPoints(String spec, double lat, double lon) {
-
         return findMedicalPointService.findMedicalPoints(
                 new Specialization(spec), lat, lon );
     }

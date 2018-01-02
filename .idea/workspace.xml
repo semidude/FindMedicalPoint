@@ -7,21 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f67c57fe-a78b-4cb3-b02e-8d9e2d47c97b" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/FindMedicalPointServiceTests.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/HomeController.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/HomeController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/MedicalPointController.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/MedicalPointController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Address.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Address.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Location.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Location.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/MedicalPoint.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/MedicalPoint.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/MedicalPointUnit.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Sector.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Sector.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Specialization.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Specialization.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/parsing/Parser.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/parsing/Parser.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java" afterPath="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/FindMedicalPointApplicationTests.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/domain/LocationTest.java" afterPath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/domain/LocationTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/domain/SectorTest.java" afterPath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/domain/SectorTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/FindMedicalPointServiceTests.java" afterPath="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/FindMedicalPointServiceTests.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -47,18 +34,18 @@
       <file leaf-file-name="MedicalPointController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/MedicalPointController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1122">
+            <state relative-caret-position="320">
               <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FindMedicalPointService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FindMedicalPointService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1513">
-              <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="40" selection-end-line="100" selection-end-column="40" />
+            <state relative-caret-position="255">
+              <caret line="67" column="9" lean-forward="true" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -66,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FindMedicalPointServiceTests.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FindMedicalPointServiceTests.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/FindMedicalPointServiceTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="61" column="44" lean-forward="true" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
+            <state relative-caret-position="1190">
+              <caret line="117" column="9" lean-forward="true" selection-start-line="117" selection-start-column="9" selection-end-line="117" selection-end-column="9" />
               <folding>
                 <element signature="e#3909#3910#0" expanded="true" />
                 <element signature="e#3961#3962#0" expanded="true" />
@@ -181,12 +168,12 @@
         <option value="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/MedicalPoint.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Address.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/FindMedicalPointApplicationTests.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Sector.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/domain/SectorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Location.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/FindMedicalPointServiceTests.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/FindMedicalPointServiceTests.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java" />
       </list>
     </option>
   </component>
@@ -589,7 +576,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat">
+  <component name="RunManager" selected="JUnit.All tests">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -942,13 +929,13 @@
       <workItem from="1514553807360" duration="1553000" />
       <workItem from="1514563518853" duration="10650000" />
       <workItem from="1514641425025" duration="6756000" />
-      <workItem from="1514836675650" duration="833000" />
+      <workItem from="1514836675650" duration="5819000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="FindMedicalPointServiceTests_givenAB_WhenFindAInNearby_ThenAIsFound - 2017.12.30 at 16h 05m 50s.xml">
-      <configuration name="FindMedicalPointServiceTests.givenAB_WhenFindAInNearby_ThenAIsFound" configurationId="JUnit" />
+    <history-entry file="All_tests - 2018.01.01 at 22h 09m 32s.xml">
+      <configuration name="All tests" configurationId="JUnit" />
     </history-entry>
     <history-entry file="SectorTest_fromLocation - 2017.12.30 at 16h 07m 07s.xml">
       <configuration name="SectorTest.fromLocation" configurationId="JUnit" />
@@ -979,7 +966,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179076000" />
+    <option name="totallyTimeSpent" value="184062000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1368" height="725" extended-state="6" />
@@ -1003,9 +990,9 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32944915" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.48392284" sideWeight="0.74791664" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48392284" sideWeight="0.74791664" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22986823" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
@@ -1170,6 +1157,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="36" lean-forward="false" selection-start-line="0" selection-start-column="36" selection-end-line="0" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1287,24 +1275,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/MedicalPointController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1513">
-          <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="40" selection-end-line="100" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/domain/Location.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -1329,13 +1299,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/controller/MedicalPointController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/semisoft/findmp/unit/FindMedicalPointServiceTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="61" column="44" lean-forward="true" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
+        <state relative-caret-position="1190">
+          <caret line="117" column="9" lean-forward="true" selection-start-line="117" selection-start-column="9" selection-end-line="117" selection-end-column="9" />
           <folding>
             <element signature="e#3909#3910#0" expanded="true" />
             <element signature="e#3961#3962#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/semisoft/findmp/service/FindMedicalPointService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="67" column="9" lean-forward="true" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
