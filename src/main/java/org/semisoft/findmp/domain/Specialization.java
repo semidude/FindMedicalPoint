@@ -49,7 +49,18 @@ public class Specialization
 
     @Override
     public boolean equals(Object o) {
-        Specialization other = (Specialization) o;
-        return name.equals(other.getName());
+        if (this == o) return true;
+        if (!(o instanceof Specialization)) return false;
+
+        Specialization that = (Specialization) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + keywords.hashCode();
+        return result;
     }
 }

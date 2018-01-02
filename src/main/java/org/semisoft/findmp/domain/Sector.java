@@ -3,6 +3,7 @@ package org.semisoft.findmp.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Sector
@@ -13,8 +14,8 @@ public class Sector
     private int x;
     private int y;
 
-    private static double physicalWidth = 10;
-    private static double physicalHeight = 10;
+    private static double physicalWidth = 50;
+    private static double physicalHeight = 50;
 
     public enum SectorCorner {TOP_LEFT, BOTTOM_LEFT, BOTTOM_RIGHT, TOP_RIGHT};
 
@@ -71,8 +72,8 @@ public class Sector
 
     private boolean locationInBounds(Location location)
     {
-        Sector sector = Sector.fromLocation(location);
-        return sector.equals(this);
+        //TODO implement locationInBounds
+        return false;
     }
 
 
@@ -113,7 +114,20 @@ public class Sector
 
     @Override
     public boolean equals(Object o) {
-        Sector other = (Sector) o;
-        return x == other.getX() && y == other.getY();
+        if (this == o) return true;
+        if (!(o instanceof Sector)) return false;
+
+        Sector sector = (Sector) o;
+
+        if (x != sector.x) return false;
+        return  y==sector.y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + x;
+        result = 31 * result + y;
+        return result;
     }
 }
