@@ -29,6 +29,11 @@ public class Address
         return city + " " + street + " " + number;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return this.toString().equals(o.toString());
+    }
+
     public String getCity()
     {
         return city;
@@ -52,26 +57,5 @@ public class Address
     public void setNumber(String number)
     {
         this.number = number;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Address)) return false;
-
-        Address address = (Address) o;
-
-        if (!city.equals(address.city)) return false;
-        if (!street.equals(address.street)) return false;
-        return number.equals(address.number);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + city.hashCode();
-        result = 31 * result + street.hashCode();
-        result = 31 * result + number.hashCode();
-        return result;
     }
 }

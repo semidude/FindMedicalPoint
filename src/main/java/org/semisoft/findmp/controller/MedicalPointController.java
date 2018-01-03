@@ -1,15 +1,12 @@
 package org.semisoft.findmp.controller;
 
-import org.hibernate.TransientObjectException;
 import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.MedicalPoint;
-import org.semisoft.findmp.domain.Sector;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.domain.repository.SectorRepository;
-import org.semisoft.findmp.parsing.*;
+import org.semisoft.findmp.parsing.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.rmi.NoSuchObjectException;
-import java.util.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(value = "/medicalPoints")
@@ -31,16 +27,6 @@ public class MedicalPointController
     private SectorRepository sectorRepository;
     @Autowired
     private Parser parser;
-    @Autowired
-    private TempDbAdd tempDbAdd;
-    @Autowired
-    private TempDbSelect tempDbSelect;
-    @Autowired
-    private MainDbSelect mainDbSelect;
-    @Autowired
-    private TempDbDelete tempDbDelete;
-    @Autowired
-    private Shepard shepard;
     private List<MedicalPoint> medicalPointsList;
 
     public MedicalPointController()
@@ -57,61 +43,12 @@ public class MedicalPointController
         //MedicalPoint medicalPoint = parser.add2();
         //medicalPointRepository.save(medicalPoint);
         try{
-            List<MedicalPoint> medicalPoints = shepard.add();
+            List<MedicalPoint> medicalPoints = parser.add();
             for (MedicalPoint medicalPoint1 : medicalPoints){
                 medicalPointRepository.save(medicalPoint1);
             }
         }
         catch (IOException e){}
-        return medicalPointRepository.findAll();
-    }
-    @RequestMapping("/parse")
-    public @ResponseBody Iterable<MedicalPoint> parse2(){
-        //MedicalPoint medicalPoint = parser.add2();
-        //medicalPointRepository.save(medicalPoint);
-        try{
-            tempDbAdd.add();
-        }
-        catch (IOException e){}
-        return medicalPointRepository.findAll();
-    }
-    @RequestMapping("/pars")
-    public @ResponseBody Iterable<MedicalPoint> parse3(){
-        //MedicalPoint medicalPoint = parser.add2();
-        //medicalPointRepository.save(medicalPoint);
-        /*List<MedicalPoint> medicalPoints = tempDbSelect.select();
-            for (MedicalPoint medicalPoint1 : medicalPoints) {
-                Address address = new Address(medicalPoint1.getAddress().getCity(),medicalPoint1.getAddress().getStreet(),medicalPoint1.getAddress().getNumber());
-                Specialization specialization = new Specialization(medicalPoint1.getSpecialization().getName());
-
-                //medicalPoint = medicalPoint1;
-                medicalPointRepository.save(medicalPoint1);
-            }
-        */
-        //List<MedicalPoint> medicalPointList = mainDbSelect.select();
-        /*Iterable<MedicalPoint> medicalPointIterable = medicalPointRepository.findAll();
-        for (MedicalPoint medicalPoint: medicalPointIterable){
-            MedicalPoint subMedicalPoint = tempDbSelect.selectElement(medicalPoint.getAddress(),medicalPoint.getSpecialization().getName());
-            System.out.println("Przed ifem");
-            System.out.println(medicalPoint.getAddress());
-            if (subMedicalPoint != null) {
-                System.out.println("Za ifem");
-                if (subMedicalPoint.equals(medicalPoint)) {
-                    tempDbDelete.delete(subMedicalPoint.getAddress(), subMedicalPoint.getSpecialization().getName());
-                } else {
-                    System.out.println("W elsie");
-                    medicalPointRepository.delete(medicalPoint.getId());
-                    medicalPointRepository.save(subMedicalPoint);
-                    tempDbDelete.delete(subMedicalPoint.getAddress(), subMedicalPoint.getSpecialization().getName());
-                }
-            }
-        }*/
-        medicalPointRepository.deleteAll();
-        List<MedicalPoint> medicalPointList = tempDbSelect.select();
-        for (MedicalPoint medicalPoint: medicalPointList){
-            medicalPointRepository.save(medicalPoint);
-            //System.out.println("To drugie");
-        }
         return medicalPointRepository.findAll();
     }
 
