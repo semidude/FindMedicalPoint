@@ -1,17 +1,11 @@
 package org.semisoft.findmp.controller;
 
 import org.semisoft.findmp.domain.Address;
-import org.semisoft.findmp.domain.Location;
 import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.domain.repository.SectorRepository;
-<<<<<<< HEAD
-import org.semisoft.findmp.parsing.Parser;
-import org.semisoft.findmp.service.FindMedicalPointService;
-=======
 import org.semisoft.findmp.parsing.*;
->>>>>>> 6e1d8028e204a3d1ad7ae24a60cbf7894405215b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,11 +27,6 @@ public class MedicalPointController
     private SectorRepository sectorRepository;
     @Autowired
     private Parser parser;
-<<<<<<< HEAD
-
-    @Autowired
-    private FindMedicalPointService findmpService;
-=======
     @Autowired
     private TempDbAdd tempDbAdd;
     @Autowired
@@ -49,7 +38,6 @@ public class MedicalPointController
     @Autowired
     private Shepard shepard;
 
->>>>>>> 6e1d8028e204a3d1ad7ae24a60cbf7894405215b
     private List<MedicalPoint> medicalPointsList;
 
     public MedicalPointController()
@@ -147,7 +135,7 @@ public class MedicalPointController
     /** A method for manually adding medical points to the database,
      *  could be used from the medical point's register form **/
     @RequestMapping("/addmp")
-    public @ResponseBody Iterable<MedicalPoint> addMedicalPoint(@RequestParam String name, @RequestParam String specialization, @RequestParam String adress)
+    public @ResponseBody String addMedicalPoint(@RequestParam String name, @RequestParam String specialization, @RequestParam String adress)
     {
         //TODO update findmp
         //example path: http://localhost:8080/addmp?name=Fajna+Przychodnia&specialization=Ortopeda&adress=Warszawa;Ksiecia+Janusza;39
@@ -158,19 +146,19 @@ public class MedicalPointController
                 new Specialization(specialization),
                 new Address(adressParts[0], adressParts[1], adressParts[2]));
         medicalPointRepository.save(medicalPoint);
-        return medicalPointRepository.findAll();
+        return "Saved successfully!";
     }
 
     @RequestMapping(value = "/removemp", method = RequestMethod.POST)
-    public @ResponseBody Iterable<MedicalPoint> removeMedicalPoint(@RequestParam long ID)
+    public @ResponseBody String removeMedicalPoint(@RequestParam long ID)
     {
         //example path: http://localhost:8080/removemp?ID=1
         MedicalPoint medPoint = medicalPointRepository.findOne(ID);
         if(medPoint!=null) {
             medicalPointRepository.delete(ID);
-
+            return "Deleted succesfully!";
         }
-         return medicalPointRepository.findAll();
+        else return "No such ID.";
     }
 
     /** Just for testing, will be removed later */
@@ -180,24 +168,5 @@ public class MedicalPointController
     {
         return medicalPointRepository.findBySector(sectorRepository.findByXAndY(x, y));
     }
-
-    @RequestMapping("/findClosest")
-    public @ResponseBody Iterable<MedicalPoint> findClosest(@RequestParam String specialization, @RequestParam double lat, @RequestParam double lon)
-    {
-        //example path: http://localhost:8080/addmp?specialization=Okulista&lat=1&lon=1
-        return findmpService.findMedicalPoints(new Specialization(specialization), lat, lon);
-    }
-    @RequestMapping("/findClosestByAddress")
-    public @ResponseBody Iterable<MedicalPoint> findClosestByAddress(@RequestParam String specialization, @RequestParam String address)
-    {
-        //example path: http://localhost:8080/addmp?specialization=Ortopeda&address=Warszawa;Ksiecia+Janusza;39
-        String[] addressParts = address.split(";");
-        //Address myAddress = new Address(addressParts[0], addressParts[1], addressParts[2]);
-        Address myAddress = new Address("Warszawa", "Skoroszewska", "4");
-        Location myLocation = Location.fromAddress(myAddress);
-        return findmpService.findMedicalPoints(new Specialization(specialization), myLocation.getLatitude(), myLocation.getLongitude());
-       // return medicalPointRepository.findAll();
-    }
-
 
 }

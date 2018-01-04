@@ -6,12 +6,8 @@ import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.domain.repository.SectorRepository;
-<<<<<<< HEAD
 import org.semisoft.findmp.parsing.Parser;
 import org.semisoft.findmp.service.FindMedicalPointService;
-=======
-import org.semisoft.findmp.parsing.*;
->>>>>>> 6e1d8028e204a3d1ad7ae24a60cbf7894405215b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,23 +29,9 @@ public class MedicalPointController
     private SectorRepository sectorRepository;
     @Autowired
     private Parser parser;
-<<<<<<< HEAD
 
     @Autowired
     private FindMedicalPointService findmpService;
-=======
-    @Autowired
-    private TempDbAdd tempDbAdd;
-    @Autowired
-    private TempDbSelect tempDbSelect;
-    @Autowired
-    private MainDbSelect mainDbSelect;
-    @Autowired
-    private TempDbDelete tempDbDelete;
-    @Autowired
-    private Shepard shepard;
-
->>>>>>> 6e1d8028e204a3d1ad7ae24a60cbf7894405215b
     private List<MedicalPoint> medicalPointsList;
 
     public MedicalPointController()
@@ -74,57 +56,6 @@ public class MedicalPointController
         catch (IOException e){}
         return medicalPointRepository.findAll();
     }
-
-    @RequestMapping("/parse")
-    public @ResponseBody Iterable<MedicalPoint> parse2(){
-        //MedicalPoint medicalPoint = parser.add2();
-        //medicalPointRepository.save(medicalPoint);
-        try{
-            tempDbAdd.add();
-        }
-        catch (IOException e){}
-        return medicalPointRepository.findAll();
-    }
-    @RequestMapping("/pars")
-    public @ResponseBody Iterable<MedicalPoint> parse3(){
-        //MedicalPoint medicalPoint = parser.add2();
-        //medicalPointRepository.save(medicalPoint);
-        /*List<MedicalPoint> medicalPoints = tempDbSelect.select();
-            for (MedicalPoint medicalPoint1 : medicalPoints) {
-                Address address = new Address(medicalPoint1.getAddress().getCity(),medicalPoint1.getAddress().getStreet(),medicalPoint1.getAddress().getNumber());
-                Specialization specialization = new Specialization(medicalPoint1.getSpecialization().getName());
-
-                //medicalPoint = medicalPoint1;
-                medicalPointRepository.save(medicalPoint1);
-            }
-        */
-        //List<MedicalPoint> medicalPointList = mainDbSelect.select();
-        /*Iterable<MedicalPoint> medicalPointIterable = medicalPointRepository.findAll();
-        for (MedicalPoint medicalPoint: medicalPointIterable){
-            MedicalPoint subMedicalPoint = tempDbSelect.selectElement(medicalPoint.getAddress(),medicalPoint.getSpecialization().getName());
-            System.out.println("Przed ifem");
-            System.out.println(medicalPoint.getAddress());
-            if (subMedicalPoint != null) {
-                System.out.println("Za ifem");
-                if (subMedicalPoint.equals(medicalPoint)) {
-                    tempDbDelete.delete(subMedicalPoint.getAddress(), subMedicalPoint.getSpecialization().getName());
-                } else {
-                    System.out.println("W elsie");
-                    medicalPointRepository.delete(medicalPoint.getId());
-                    medicalPointRepository.save(subMedicalPoint);
-                    tempDbDelete.delete(subMedicalPoint.getAddress(), subMedicalPoint.getSpecialization().getName());
-                }
-            }
-        }*/
-        medicalPointRepository.deleteAll();
-        List<MedicalPoint> medicalPointList = tempDbSelect.select();
-        for (MedicalPoint medicalPoint: medicalPointList){
-            medicalPointRepository.save(medicalPoint);
-            //System.out.println("To drugie");
-        }
-        return medicalPointRepository.findAll();
-    }
-
 
     @RequestMapping(value = "/findmp2", method = RequestMethod.GET)
     public List<MedicalPoint> findMedicalPoints2()
