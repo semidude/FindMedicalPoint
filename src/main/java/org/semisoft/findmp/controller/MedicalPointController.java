@@ -6,12 +6,9 @@ import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.domain.repository.SectorRepository;
-<<<<<<< HEAD
 import org.semisoft.findmp.parsing.Parser;
 import org.semisoft.findmp.service.FindMedicalPointService;
-=======
 import org.semisoft.findmp.parsing.*;
->>>>>>> 6e1d8028e204a3d1ad7ae24a60cbf7894405215b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,11 +30,9 @@ public class MedicalPointController
     private SectorRepository sectorRepository;
     @Autowired
     private Parser parser;
-<<<<<<< HEAD
 
     @Autowired
     private FindMedicalPointService findmpService;
-=======
     @Autowired
     private TempDbAdd tempDbAdd;
     @Autowired
@@ -49,7 +44,6 @@ public class MedicalPointController
     @Autowired
     private Shepard shepard;
 
->>>>>>> 6e1d8028e204a3d1ad7ae24a60cbf7894405215b
     private List<MedicalPoint> medicalPointsList;
 
     public MedicalPointController()
@@ -75,7 +69,7 @@ public class MedicalPointController
         return medicalPointRepository.findAll();
     }
 
-    @RequestMapping("/parse")
+   /* @RequestMapping("/parse")
     public @ResponseBody Iterable<MedicalPoint> parse2(){
         //MedicalPoint medicalPoint = parser.add2();
         //medicalPointRepository.save(medicalPoint);
@@ -84,7 +78,7 @@ public class MedicalPointController
         }
         catch (IOException e){}
         return medicalPointRepository.findAll();
-    }
+    }*/
     @RequestMapping("/pars")
     public @ResponseBody Iterable<MedicalPoint> parse3(){
         //MedicalPoint medicalPoint = parser.add2();
