@@ -111,7 +111,7 @@ public class FindMedicalPointServiceTests {
                     spec,
                     new Specialization(spec),
                     //address could be anything in case of mocking MedicalPointRepository
-                    new Address("Warszawa", "Księcia Janusza", "39"));
+                    new Address("Warszawa", "Skoroszewska", "4"));
 
             medicalPoints.add(medicalPoint);
             specMedicalPointMap.put(spec, medicalPoint);

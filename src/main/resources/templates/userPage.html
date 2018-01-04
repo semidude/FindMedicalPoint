@@ -12,9 +12,9 @@
     <script type="text/javascript" src="webapp/static/app/static/app.module.js" th:src="@{/static/app/app.module.js}"></script>
     <script type="text/javascript" src="webapp/static/app/medicalPoints.controller.js" th:src="@{/static/app/medicalPoints.controller.js}"></script>
 
-<script>
-    alert('cos ladnego1');
-</script>
+    <script>
+        alert('This is User Page!');
+    </script>
 
 </head>
 <body ng-app="app" ng-controller="MedicalPointsController as vm">
@@ -35,9 +35,14 @@
 
             <div class="btn-group" role="group">
                 <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
-            </div>
-            Adding medical points:
-
+            </div> <br/>
+            Find closest medical point <br/>
+            <input type = "text" placeholder="Specialization" ng-model="specializationSearch1.specialization.name" />
+            <input type = "text" placeholder="city" ng-model="addressSearch1.address.city" />
+            <input type = "text" placeholder="street" ng-model="addressSearch1.address.street" />
+            <input type = "text" placeholder="number" ng-model="addressSearch1.address.number" />
+            <button ng-click="vm.getLocation()" type="button" class="btn btn-default">Localize Me</button>
+            <button ng-click="vm.findClosestByAddress(specializationSearch1.specialization.name, addressSearch1.address.city, addressSearch1.address.street, addressSearch1.address.number)" type="button" class="btn btn-default">Search</button>
             <table class="table">
                 <thead>
                 <tr>
