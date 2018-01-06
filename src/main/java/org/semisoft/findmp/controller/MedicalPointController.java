@@ -68,7 +68,7 @@ public class MedicalPointController
         //MedicalPoint medicalPoint = parser.add2();
         //medicalPointRepository.save(medicalPoint);
         try{
-            tempDbAdd.add();
+            shepard.add();
         }
         catch (IOException e){}
         return medicalPointRepository.findAll();

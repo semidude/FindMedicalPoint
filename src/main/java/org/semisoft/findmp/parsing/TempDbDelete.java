@@ -21,7 +21,7 @@ public class TempDbDelete {
             c = DriverManager
                     .getConnection("jdbc:mysql://127.0.0.1:3306/db_example","springuser","ThePassword");
             stmt = c.createStatement();
-            String sql = "DELETE FROM DATA WHERE SPECIALIZATION = '"+specialization+"' AND CITY = '"+address.getCity()+"' AND STREET = '"+address.getStreet()+"' AND NUMBER = '"+address.getNumber()+"'";
+            String sql = "DELETE FROM DATATEMP WHERE SPECIALIZATION = '"+specialization+"' AND CITY = '"+address.getCity()+"' AND STREET = '"+address.getStreet()+"' AND NUMBER = '"+address.getNumber()+"'";
             stmt.executeQuery(sql);
             stmt.close();
             c.close();

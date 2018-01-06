@@ -47,8 +47,12 @@ public class Shepard {
     public List<MedicalPoint> add() throws IOException {
         //public static void main (String[] args) throws IOException{
         List<MedicalPoint> medicalPoints = new ArrayList<MedicalPoint>();
-        for (int woj = 1; woj <= 1; woj++) { //Ustawianie ile wojewĂłdztw ma parsawac
+        TempDbAdd.create();
+        int lt = 10;
+        for (int woj = 7; woj <= 7; woj++) { //Ustawianie ile wojewĂłdztw ma parsawac
             int licz1 = 0;
+            ExecutorService executor = Executors.newFixedThreadPool(lt);
+            List<Future<List<MedicalPoint>>> list = new ArrayList<Future<List<MedicalPoint>>>();
             while (licz1 < 10) {
                 try {
                     String elUrl = "https://zip.nfz.gov.pl/GSL/GSL/UniwersalneSearch?specjalizacja=&wojewodztwo=";
@@ -75,10 +79,9 @@ public class Shepard {
                         t = t+1;
                     }
                     num = t.intValue();
-                    ExecutorService executor = Executors.newFixedThreadPool(10);
-                    List<Future<List<MedicalPoint>>> list = new ArrayList<Future<List<MedicalPoint>>>();
                     int iteracja = 1;
-                    while (iteracja <= 5) {// iloĹ›c stron do sparsowania, jeĹ›li wszystkie to wartoĹ›Ä‡ 'num'
+                    int koniec = 0;
+                    while (iteracja <= num && koniec == 0) {
                         //links = null;
                         //System.out.println(sessionId);
                         /*if (iteracja != 0) {
@@ -87,32 +90,66 @@ public class Shepard {
                                 break;
                             }
                         }*/
+                        res = Jsoup.connect(elUrl)
+                                //.data("username", "myUsername", "password", "myPassword")
+                                //.method(Method.POST)
+                                .timeout(10000)
+                                .execute();
+
+                        doc = res.parse();
+                        sessionId = res.cookie("ASP.NET_SessionId");
                         p = links.indexOf("Page=");
-                        links = links.substring(0,p+5) + iteracja + links.substring(links.indexOf("&PageSize"));
-                        Future<List<MedicalPoint>> future = executor.submit(new Sheep(links,"Thred - " + iteracja, sessionId));
+                        List<String> linkList = new ArrayList<String>();
+                        for (int k = iteracja*10-9;k<=iteracja*10 && k<=num;k++) {
+                            links = links.substring(0, p + 5) + k + links.substring(links.indexOf("&PageSize"));
+                            linkList.add(links);
+                            if (k == num){
+                                koniec = 1;
+                                break;
+                            }
+                        }
+                        Future<List<MedicalPoint>> future = executor.submit(new Sheep(linkList,"Thred - " + iteracja, sessionId));
                         list.add(future);
                         //System.out.println(links);
                         iteracja+= 1;
                     }
+                    iteracja = 0;
                     for (Future<List<MedicalPoint>> fut:  list){
-                        try {
-                            List<MedicalPoint> medicalPoints1 = fut.get();
-                            for (MedicalPoint medicalPoint: medicalPoints1){
-                                medicalPoints.add(medicalPoint);
+                        iteracja += 1;
+                        while (true) {
+                            try {
+                                System.out.println("Fut");
+                                List<MedicalPoint> medicalPoints1 = fut.get();
+                                //TempDbAdd.add(medicalPoints1);
+                                /*for (MedicalPoint medicalPoint : medicalPoints1) {
+                                    TempDbAdd.add(medicalPoints);
+                                    medicalPoints.add(medicalPoint);
+                                }*/
+                                //fut.cancel(true);
+                                break;
+                            } catch (OutOfMemoryError ome) {
+                                System.err.println("Memory problems");
+                                System.gc();
+                                try {
+                                    fut.wait(10000);
+                                }catch (InterruptedException ie){}
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                                break;
+                            } catch (ExecutionException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                                break;
                             }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
                         }
+
                     }
                     break;
                 } catch (SocketTimeoutException ex) {
                     //l.add("text...");
-                    System.out.println("Socket");
+                    System.out.println("Socket Shepard");
                     licz1 += 1;
                     if (licz1 >= 10) {
                         try {
@@ -126,7 +163,7 @@ public class Shepard {
                         }
                     }
                 } catch (IOException e) {
-                    System.out.println("IO");
+                    System.out.println("IO Shepard");
                     licz1 += 1;
                     while (true) {
                         try {

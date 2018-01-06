@@ -43,7 +43,9 @@ public class Parser {
     public List<MedicalPoint> add() throws IOException {
         //public static void main (String[] args) throws IOException{
         List<MedicalPoint> medicalPoints = new ArrayList<MedicalPoint>();
-        for (int woj = 1; woj <= 1; woj++) {
+        TempDbAdd.create();
+        int id = 0;
+        for (int woj = 7; woj <= 7; woj++) {
             int licz1 = 0;
             while (licz1 < 10) {
                 try {
@@ -72,7 +74,7 @@ public class Parser {
                     }
                     num = t.intValue();
                     int iteracja = 1;
-                    while (iteracja <= 10) {
+                    while (iteracja <= 5) {
                         links = null;
                         //System.out.println(sessionId);
                         if (iteracja != 0) {
@@ -121,53 +123,93 @@ public class Parser {
                                         if (i == -1) {
                                             i = s.indexOf("UL ");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("Aleje ");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("UL.");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("Plac");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("al.");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("AL.");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("Pl");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("pl.");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("PL ");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("Aleja");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
+                                            i = s.indexOf("ALEJA");
+                                        }
+                                        if (i == -1) {
+                                            i = s.indexOf("aleja ");
+                                        }
+                                        if (i == -1) {
                                             i = s.indexOf("PL.");
                                         }
-                                        if (i == -1){
+                                        if (i == -1) {
                                             i = s.indexOf("PLAC ");
                                         }
-                                        System.out.println(i);
+                                        if (i == -1) {
+                                            i = s.indexOf("PASAŻ");
+                                        }
+                                        if (i == -1) {
+                                            i = s.indexOf("Pasaż");
+                                        }
+                                        if (i == -1) {
+                                            i = s.indexOf("pasaż");
+                                        }
+                                        if (i == -1) {
+                                            i = s.indexOf("PASAZ ");
+                                        }
+                                        if (i == -1) {
+                                            i = s.indexOf("Pasaz ");
+                                        }
+                                        if (i == -1) {
+                                            i = s.indexOf("pasaz ");
+                                        }
+                                        //System.out.println(i);
                                         System.out.println(s);
-                                        String nazwaPlacowki = s.substring(0,i);
-                                        String adres = s.substring(i);
-                                        i = adres.indexOf(",");
-                                        String ulica = adres.substring(0, i);
-                                        i = ulica.lastIndexOf(" ");
-                                        String numer = ulica.substring(i + 1);
-                                        ulica = ulica.substring(0, i);
-                                        i = adres.indexOf(", ");
-                                        s = adres.substring(2);
-                                        i = s.indexOf("-");
-                                        String kodPocztowy = s.substring(i-2, i+4);
-                                        String miasto = s.substring(i+5);
+                                        String nazwaPlacowki = null;
+                                        String adres = null;
+                                        String ulica = null;
+                                        String numer = null;
+                                        String kodPocztowy = null;
+                                        String miasto = null;
+                                        try {
+                                            nazwaPlacowki = s.substring(0, i);
+                                            adres = s.substring(i);
+                                            i = adres.indexOf(",");
+                                            ulica = adres.substring(0, i);
+                                            i = ulica.lastIndexOf(" ");
+                                            numer = ulica.substring(i + 1);
+                                            ulica = ulica.substring(0, i);
+                                            i = adres.indexOf(", ");
+                                            s = adres.substring(2);
+                                            i = s.indexOf("-");
+                                            kodPocztowy = s.substring(i - 2, i + 4);
+                                            miasto = s.substring(i + 5);
+                                        } catch (IndexOutOfBoundsException iobe) {
+                                            System.err.println("Error");
+                                            System.err.println(s);
+                                            adres = s;
+                                            ulica = "dupa";
+                                            numer = "dupa";
+                                            kodPocztowy = "dupa";
+                                            miasto = "dupa";
+                                        }
                                         System.out.println(ulica + "/" + numer + "/" + kodPocztowy + "/" + miasto);
                                         //System.out.println(nazwaPlacowki);
                                         //System.out.println(adres);
@@ -175,7 +217,7 @@ public class Parser {
                                         //System.out.println(telefonRejestracja);
                                         String telefon = subLink.select("span:containsOwn(Telefon:)").text();
                                         //System.out.println(telefon);
-                                        String typ = subLink.select("span.Mark").text();
+                                        String typ = subLink.select("span.Mark").text().replace("'","`");
                                         System.out.println(typ);
                                         String witryna = subLink.select("a[href*=http://]").text();
                                         name = nazwaPlacowki;
@@ -199,6 +241,8 @@ public class Parser {
                                     MedicalPoint medicalPoint = new MedicalPoint(name, specialization, address);
                                     System.out.println("Byłem tu");
                                     medicalPoints.add(medicalPoint);
+                                    id += 1;
+                                    TempDbAdd.add(medicalPoint);
                                     //medicalPointRepository.save(medicalPoint);
                                 }
                                 resultLinks = doc2.select("div[class*=yes]");

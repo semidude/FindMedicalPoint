@@ -26,23 +26,17 @@ import java.util.Map;
 public class TempDbAdd {
     @Autowired
     private static MedicalPointRepository medicalPointRepository;
-    public void add () throws IOException{
-        List<MedicalPoint> medicalPoints = new ArrayList<MedicalPoint>();
+    public static void create (){
         Connection c = null;
         Statement stmt = null;
-        Shepard shepard = new Shepard();
-        Parser parser = new Parser();
-        int id = 0;
         try {
-            /*Class.forName("org.postgresql.Driver");
-            c = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/temp_db",
-                            "postgres", "piotrek");*/
             Class.forName("com.mysql.jdbc.Driver");
             c = DriverManager
-                    .getConnection("jdbc:mysql://127.0.0.1:3306/db_example","springuser","ThePassword");
+                    .getConnection("jdbc:mysql://127.0.0.1:3306/db_example", "springuser", "ThePassword");
             stmt = c.createStatement();
-            String sql = "DROP TABLE IF EXISTS data";
+            System.out.println("Drop");
+            String sql;
+            sql = "DROP TABLE IF EXISTS datatemp";
             stmt.executeUpdate(sql);
             /*sql = "CREATE TABLE data " +
                     "(ID INT    NOT NULL," +
@@ -53,8 +47,9 @@ public class TempDbAdd {
                     " sector_x	INT ," +
                     " sector_y	INT ," +
                     "specialization	TEXT)";*/
-            sql = "CREATE TABLE data " +
-                    "(ID bigint(20)    NOT NULL," +
+            System.out.println("Create");
+            sql = "CREATE TABLE datatemp " +
+                    "(ID bigint(20)  NOT NULL AUTO_INCREMENT PRIMARY KEY," +
                     " city	varchar(255), " +
                     " number	varchar(255), " +
                     " street	varchar(255), " +
@@ -63,24 +58,73 @@ public class TempDbAdd {
                     " sector_y	INT ," +
                     "specialization	varchar(255))";
             stmt.executeUpdate(sql);
-            medicalPoints = shepard.add();
-            for (MedicalPoint medicalPoint: medicalPoints){
-                id+=1;
-                sql = "Insert into data (ID,city,number,street,name,sector_x,sector_y,specialization) VALUES ("+id+"," +
+            System.out.println("After Create");
+            stmt.close();
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+        }
+    }
+    public static void add (MedicalPoint medicalPoint) throws IOException{
+        //List<MedicalPoint> medicalPoints = new ArrayList<MedicalPoint>();
+        Connection c = null;
+        Statement stmt = null;
+        Shepard shepard = new Shepard();
+        Parser parser = new Parser();
+        //int id = 0;
+        try {
+            /*Class.forName("org.postgresql.Driver");
+            c = DriverManager
+                    .getConnection("jdbc:postgresql://localhost:5432/temp_db",
+                            "postgres", "piotrek");*/
+            Class.forName("com.mysql.jdbc.Driver");
+            c = DriverManager
+                    .getConnection("jdbc:mysql://127.0.0.1:3306/db_example","springuser","ThePassword");
+            stmt = c.createStatement();
+            String sql;
+            /*if (thread == 1) {
+                sql = "DROP TABLE IF EXISTS data";
+                stmt.executeUpdate(sql);
+            /*sql = "CREATE TABLE data " +
+                    "(ID INT    NOT NULL," +
+                    " city	TEXT, " +
+                    " number	TEXT, " +
+                    " street	TEXT, " +
+                    " name	TEXT," +
+                    " sector_x	INT ," +
+                    " sector_y	INT ," +
+                    "specialization	TEXT)";
+                sql = "CREATE TABLE data " +
+                        "(ID bigint(20)    NOT NULL," +
+                        " city	varchar(255), " +
+                        " number	varchar(255), " +
+                        " street	varchar(255), " +
+                        " name	varchar(255)," +
+                        " sector_x	INT ," +
+                        " sector_y	INT ," +
+                        "specialization	varchar(255))";
+                stmt.executeUpdate(sql);
+            }*/
+
+            //medicalPoints = shepard.add();
+            //for (MedicalPoint medicalPoint: medicalPoints){
+                //id+=1;
+                sql = "Insert into datatemp (city,number,street,name,specialization) VALUES (" +
                         "'"+medicalPoint.getAddress().getCity()+"'," +
                         "'"+medicalPoint.getAddress().getNumber()+"'," +
                         "'"+medicalPoint.getAddress().getStreet()+"'," +
                         "'"+medicalPoint.getName()+"'," +
-                        ""+medicalPoint.getSector().getX()+"," +
-                        ""+medicalPoint.getSector().getY()+"," +
+                        //""+medicalPoint.getSector().getX()+"," +
+                        //""+medicalPoint.getSector().getY()+"," +
                         "'"+medicalPoint.getSpecialization().getName()+"');";
                 stmt.executeUpdate(sql);
 
-            }
+            //}
             stmt.close();
             c.close();
         }
-        catch (IOException io){}
+        //catch (IOException io){}
         catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());

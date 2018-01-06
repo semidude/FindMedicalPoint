@@ -23,6 +23,12 @@ public class MedicalPoint
         this.address = address;
         sector = Sector.fromLocation(Location.fromAddress(address));
     }
+    public MedicalPoint(String name, Specialization specialization, Address address, boolean sector)
+    {
+        this.name = name;
+        this.specialization = specialization;
+        this.address = address;
+    }
     public MedicalPoint(String name)
     {
         this.name = name;
