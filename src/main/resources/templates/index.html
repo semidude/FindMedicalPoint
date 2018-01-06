@@ -12,10 +12,6 @@
     <script type="text/javascript" src="webapp/static/app/static/app.module.js" th:src="@{/static/app/app.module.js}"></script>
     <script type="text/javascript" src="webapp/static/app/medicalPoints.controller.js" th:src="@{/static/app/medicalPoints.controller.js}"></script>
 
-<script>
-    alert('cos ladnego1');
-</script>
-
 </head>
 <body ng-app="app" ng-controller="MedicalPointsController as vm">
 <header>
@@ -37,32 +33,27 @@
                 <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
             </div>
             Adding medical points:
-            <input type = "text" placeholder="name" ng-model="nameText" />
-            <input type = "text" placeholder="city" ng-model="cityText" />
-            <input type = "text" placeholder="street" ng-model="streetText" />
-            <input type = "text" placeholder="number" ng-model="numberText" />
-            <input type = "text" placeholder="specialization" ng-model="specializationText" />
-
-            <button ng-click="vm.addMedicalPoint(nameText, specializationText, cityText, streetText, numberText)" type="button" class="btn btn-default">Add</button>
 
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Name
-                        <input type = "text" placeholder="search" ng-model="nameSearch.name" /> </th>
-                    <th>City
-                        <input type = "text" placeholder="search" ng-model="addressSearch.address.city" /> <br/>
-                    Street
-                        <input type = "text" placeholder="search" ng-model="addressSearch.address.street" /><br/>
-                    Number
-                        <input type = "text" placeholder="search" ng-model="addressSearch.address.number" /></th>
+                    <th>
+                        <input type = "text" placeholder="name" ng-model="nameSearch.name" /> </th>
+                    <th>
+                        <input type = "text" placeholder="city" ng-model="addressSearch.address.city" /> <br/>
+                        <input type = "text" placeholder="street" ng-model="addressSearch.address.street" /><br/>
+                        <input type = "text" placeholder="number" ng-model="addressSearch.address.number" /></th>
+                    <th>
+                        <input type = "text" placeholder="specialization" ng-model="specializationSearch.specialization.name" /> </th>
                     <th style="width: 90px"></th>
+                    <th> <button ng-click="vm.addMedicalPoint(nameSearch.name, specializationSearch.specialization.name, addressSearch.address.city, addressSearch.address.street, addressSearch.address.number)" type="button" class="btn btn-default">Add</button> </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="medicalPoint in vm.medicalPoints  | filter: nameSearch | filter: addressSearch">
+                <tr ng-repeat="medicalPoint in vm.medicalPoints  | filter: nameSearch | filter: addressSearch | filter: specializationSearch ">
                     <td>{{medicalPoint.name}}</td>
                     <td>{{medicalPoint.address.city}} {{medicalPoint.address.street}} {{medicalPoint.address.number}}</td>
+                    <td>{{medicalPoint.specialization.name}}</td>
                     <td>
                         <button class="btn btn-danger" ng-click="vm.deleteMedicalPoint(medicalPoint.id)">Delete</button>
                     </td>

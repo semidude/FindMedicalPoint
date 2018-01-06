@@ -21,6 +21,16 @@ public class HomeController
         return model;
     }
 
+    @RequestMapping("/user")
+    ModelAndView userPage()
+    {
+        ModelAndView model = new ModelAndView("userPage");
+        model.addObject("datetime", new Date());
+        model.addObject("username", "Semisoft");
+        model.addObject("mode", "development");
+        return model;
+    }
+
     @RequestMapping("/showloc")
     public @ResponseBody
     String showLocation(@RequestParam double latitude, @RequestParam double longitude)

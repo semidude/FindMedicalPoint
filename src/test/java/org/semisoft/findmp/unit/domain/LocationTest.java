@@ -1,29 +1,43 @@
 package org.semisoft.findmp.unit.domain;
 
 import org.junit.jupiter.api.Test;
+import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.Location;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LocationTest
-{
+class LocationTest {
     @Test
-    void getLatitudeKilometers()
-    {
+    void fromAddress() {
+        Location location = Location.fromAddress(new Address("Warszawa", "Księcia Janusza", "39"));
+        assertEquals(location, new Location(52.242022, 20.94072));
+    }
+
+    @Test
+    void getLatitudeKilometers() {
         Location location = new Location(52.241629599999996, 20.940932999999998);
 
-        int latitudeKilometers = (int)location.getLatitudeKilometers();
+        int latitudeKilometers = (int) location.getLatitudeKilometers();
 
         assertEquals(5776, latitudeKilometers);
     }
 
     @Test
-    void getLongitudeKilometers()
-    {
+    void getLongitudeKilometers() {
         Location location = new Location(52.241629599999996, 20.940932999999998);
 
-        int longitudeKilometers = (int)location.getLongitudeKilometers();
+        int longitudeKilometers = (int) location.getLongitudeKilometers();
 
         assertEquals(1427, longitudeKilometers);
+    }
+
+    @Test
+    void calculateDistance() {
+        Location location1 = new Location(52.241675, 20.940829);
+        Location location2 = new Location(52.181766, 20.841200);
+
+        double distance = Location.calculateDistance(location1, location2);
+
+        assertEquals(9.510347970550852, distance);
     }
 }

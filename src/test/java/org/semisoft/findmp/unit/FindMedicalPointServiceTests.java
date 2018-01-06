@@ -7,6 +7,7 @@ import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.Sector;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
+import org.semisoft.findmp.domain.repository.SectorRepository;
 import org.semisoft.findmp.service.FindMedicalPointService;
 
 import java.util.ArrayList;
@@ -22,15 +23,27 @@ public class FindMedicalPointServiceTests {
     private FindMedicalPointService findMedicalPointService;
     private Map<String, MedicalPoint> specMedicalPointMap = new HashMap<>();
     private List<MedicalPoint> medicalPoints = new ArrayList<>();
-    private Sector sector = new Sector(0, 0);
+    private Sector sector = Sector.fromCoordinates(0, 0);
 
     public FindMedicalPointServiceTests() {
 
         medicalPointRepository = Mockito.mock(MedicalPointRepository.class);
-        findMedicalPointService = new FindMedicalPointService(medicalPointRepository);
+        SectorRepository sectorRepository = Mockito.mock(SectorRepository.class);
+        findMedicalPointService = new FindMedicalPointService(medicalPointRepository, sectorRepository);
 
         Mockito.when(medicalPointRepository.findBySector(sector))
                 .thenReturn(medicalPoints);
+
+        Mockito.when(sectorRepository.findAll())
+                .thenReturn(new ArrayList<>());
+
+        Mockito.when(sectorRepository.findByXAndY(sector.getX(), sector.getY()))
+                .thenReturn(sector);
+
+        Mockito.when(sectorRepository.save(sector))
+                .thenReturn(sector);
+
+        //TODO something's wrong here...
     }
 
 	@Test
@@ -111,7 +124,7 @@ public class FindMedicalPointServiceTests {
                     spec,
                     new Specialization(spec),
                     //address could be anything in case of mocking MedicalPointRepository
-                    new Address("Warszawa", "Księcia Janusza", "39"));
+                    new Address("Warszawa", "Skoroszewska", "4"));
 
             medicalPoints.add(medicalPoint);
             specMedicalPointMap.put(spec, medicalPoint);

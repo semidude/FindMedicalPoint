@@ -50,6 +50,6 @@ public class Specialization
     @Override
     public boolean equals(Object o) {
         Specialization other = (Specialization) o;
-        return name.equals(other.getName());
+        return name.equalsIgnoreCase(other.getName());
     }
 }

@@ -14,6 +14,8 @@ public class MedicalPoint
     @ManyToOne(cascade = CascadeType.ALL)
     private Specialization specialization;
     @OneToOne(cascade = CascadeType.ALL)
+    private Location location;
+    @OneToOne(cascade = CascadeType.MERGE)
     private Sector sector;
 
     public MedicalPoint(String name, Specialization specialization, Address address)
@@ -21,7 +23,8 @@ public class MedicalPoint
         this.name = name;
         this.specialization = specialization;
         this.address = address;
-        sector = Sector.fromLocation(Location.fromAddress(address));
+        location = Location.fromAddress(address);
+        sector = Sector.fromLocation(location);
     }
     public MedicalPoint(String name, Specialization specialization, Address address, boolean sector)
     {
@@ -59,6 +62,8 @@ public class MedicalPoint
     public void setAddress(Address address)
     {
         this.address = address;
+        location = Location.fromAddress(address);
+        sector = Sector.fromLocation(location);
     }
     public Specialization getSpecialization()
     {
@@ -68,13 +73,19 @@ public class MedicalPoint
     {
         this.specialization = specialization;
     }
+    public Location getLocation()
+    {
+        return location;
+    }
     public Sector getSector()
     {
         return sector;
     }
-    public void setSector(Sector sector)
+
+    @Override
+    public String toString()
     {
-        this.sector = sector;
+        return name + ", " + address + " (" + specialization + ")";
     }
 
     @Override

@@ -4,77 +4,116 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.IOException;
 
-public class Location
-{
-    double latitude;
-    double longitude;
+@Component
+@Entity
+public class Location {
+    @Id
+    @GeneratedValue
+    private Long id;
+    private double latitude;
+    private double longitude;
 
     private static final double KM_PER_LATITUDE = 110.574;
     private static final double KM_PER_LONGITUDE = 111.320;
 
-    public Location(double latitude, double longitude)
-    {
+    public Location(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public static Location fromAddress(Address address)
-    {
+    public Location() {
+        this(0.0, 0.0);
+    }
+
+    public static Location fromAddress(Address address) {
+
         GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyBmigTs1qmX99io90DIZUcAUDlrO2gWkzI")
+                .apiKey("AIzaSyC8lZAnEPg089md9w8N8HgtlNmSLpmtOE4")
                 .build();
         GeocodingResult[] results = new GeocodingResult[0];
-        try
-        {
-            results = GeocodingApi.geocode(context,
-                    address.toString()).await();
-        } catch (ApiException | InterruptedException | IOException e)
-        {
-            return new Location(0,0);
+
+        Location location;
+
+        try {
+            results = GeocodingApi.geocode(context, address.toString()).await();
+        }
+        catch (ApiException | InterruptedException | IOException e) {
+            e.printStackTrace();
         }
 
         if (results.length > 0)
-            return new Location( results[0].geometry.location.lat, results[0].geometry.location.lng );
+            location = new Location(results[0].geometry.location.lat, results[0].geometry.location.lng);
         else
-            return new Location(0,0);
+            location = new Location(0, 0);
+
+        return location;
     }
 
-    public static double calculateDistance(Location location1, Location location2)
-    {
-        return 0.0;
+    public static double calculateDistance(Location location1, Location location2) {
+
+        return distance(location1.getLatitude(), location1.getLongitude(), location2.getLatitude(), location2.getLongitude(), 'K');
     }
 
-    public double getLatitudeKilometers()
-    {
-        return KM_PER_LATITUDE*latitude;
+    private static double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
     }
-    public double getLongitudeKilometers()
-    {
-        return KM_PER_LONGITUDE*Math.cos(Math.toRadians(latitude))*longitude;
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
     }
-    public double getLatitude()
-    {
+
+    private static double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
+
+    public double getLatitudeKilometers() {
+        return KM_PER_LATITUDE * latitude;
+    }
+
+    public double getLongitudeKilometers() {
+        return KM_PER_LONGITUDE * Math.cos(Math.toRadians(latitude)) * longitude;
+    }
+
+    public double getLatitude() {
         return latitude;
     }
-    public void setLatitude(double latitude)
-    {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-    public double getLongitude()
-    {
+    public double getLongitude() {
         return longitude;
     }
-    public void setLongitude(double longitude)
-    {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "(" + latitude + ", " + longitude + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Location))
+            return false;
+
+        return toString().equals(o.toString());
     }
 }
