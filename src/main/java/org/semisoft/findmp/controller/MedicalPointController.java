@@ -7,8 +7,10 @@ import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.domain.repository.SectorRepository;
 import org.semisoft.findmp.parsing.Parser;
-import org.semisoft.findmp.service.FindMedicalPointService;
 import org.semisoft.findmp.parsing.*;
+import org.semisoft.findmp.service.FindMedicalPointService;
+import org.semisoft.findmp.service.LocationService;
+import org.semisoft.findmp.service.MedicalPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,14 +27,19 @@ import java.util.ArrayList;
 public class MedicalPointController
 {
     @Autowired
+    private FindMedicalPointService findMedicalPointService;
+    @Autowired
+    private MedicalPointService medicalPointService;
+    @Autowired
+    private LocationService locationService;
+
+    @Autowired
     private MedicalPointRepository medicalPointRepository;
     @Autowired
     private SectorRepository sectorRepository;
     @Autowired
     private Parser parser;
 
-    @Autowired
-    private FindMedicalPointService findmpService;
     @Autowired
     private TempDbAdd tempDbAdd;
     @Autowired
@@ -147,10 +154,12 @@ public class MedicalPointController
         //example path: http://localhost:8080/addmp?name=Fajna+Przychodnia&specialization=Ortopeda&adress=Warszawa;Ksiecia+Janusza;39
         //note the ';' between adress parts in the line above
         String[] adressParts = adress.split(";");
-        MedicalPoint medicalPoint = new MedicalPoint(
+
+        MedicalPoint medicalPoint = medicalPointService.createAndLocalizeMedicalPoint(
                 name,
                 new Specialization(specialization),
                 new Address(adressParts[0], adressParts[1], adressParts[2]));
+
         medicalPointRepository.save(medicalPoint);
         return medicalPointRepository.findAll();
     }
@@ -179,7 +188,7 @@ public class MedicalPointController
     public @ResponseBody Iterable<MedicalPoint> findClosest(@RequestParam String specialization, @RequestParam double lat, @RequestParam double lon)
     {
         //example path: http://localhost:8080/addmp?specialization=Okulista&lat=1&lon=1
-        return findmpService.findMedicalPoints(new Specialization(specialization), lat, lon);
+        return findMedicalPointService.findMedicalPoints(new Specialization(specialization), lat, lon, 5);
     }
     @RequestMapping("/findClosestByAddress")
     public @ResponseBody Iterable<MedicalPoint> findClosestByAddress(@RequestParam String specialization, @RequestParam String address)
@@ -188,8 +197,8 @@ public class MedicalPointController
         String[] addressParts = address.split(";");
         //Address myAddress = new Address(addressParts[0], addressParts[1], addressParts[2]);
         Address myAddress = new Address("Warszawa", "Skoroszewska", "4");
-        Location myLocation = Location.fromAddress(myAddress);
-        return findmpService.findMedicalPoints(new Specialization(specialization), myLocation.getLatitude(), myLocation.getLongitude());
+        Location myLocation = locationService.fromAddress(myAddress);
+        return findMedicalPointService.findMedicalPoints(new Specialization(specialization), myLocation.getLatitude(), myLocation.getLongitude(), 5);
        // return medicalPointRepository.findAll();
     }
 

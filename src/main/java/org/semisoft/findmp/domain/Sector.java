@@ -19,11 +19,10 @@ public class Sector {
     private int x;
     private int y;
 
-    private static SectorRepository sectorRepository;
     private static double physicalWidth = 2;
     private static double physicalHeight = 2;
 
-    private Sector(int x, int y) {
+    public Sector(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -36,42 +35,10 @@ public class Sector {
         this(0, 0);
     }
 
-    private void set(Sector other) {
+    public void set(Sector other) {
         id = other.getId();
         x = other.getX();
         y = other.getY();
-    }
-
-
-    public static Sector fromCoordinates(int x, int y) {
-
-        Sector sector = new Sector(x, y);
-
-        persistIfNeeded(sector);
-
-        return sector;
-    }
-
-    private static void persistIfNeeded(Sector sector) {
-
-        List<Sector> persistedSectors = new ArrayList<>();
-        sectorRepository.findAll().forEach(persistedSectors::add);
-
-        if (persistedSectors.contains(sector))
-            sector.set(sectorRepository.findByXAndY(sector.getX(), sector.getY()));
-        else
-            sectorRepository.save(sector);
-    }
-
-    public static Sector fromLocation(Location location) {
-
-        double kmLongitude = location.getLongitudeKilometers();
-        double kmLatitude = location.getLatitudeKilometers();
-
-        int x = (int) ((kmLongitude % physicalWidth == 0) ? kmLongitude / physicalWidth : kmLongitude / physicalWidth + 1);
-        int y = (int) ((kmLatitude % physicalHeight == 0) ? kmLatitude / physicalHeight : kmLatitude / physicalHeight + 1);
-
-        return Sector.fromCoordinates(x, y);
     }
 
     public Long getId() {
@@ -94,14 +61,16 @@ public class Sector {
         this.y = y;
     }
 
-    @Autowired
-    public void setSectorRepository(SectorRepository sectorRepository) {
-        Sector.sectorRepository = sectorRepository;
+    public static double getPhysicalWidth() {
+        return physicalWidth;
+    }
+
+    public static double getPhysicalHeight() {
+        return physicalHeight;
     }
 
     @Override
     public String toString() {
-//        return id + ": (" + x + ", " + y + ")";
         return "(" + x + ", " + y + ")";
     }
 

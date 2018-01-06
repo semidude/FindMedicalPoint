@@ -3,8 +3,7 @@ package org.semisoft.findmp.domain;
 import javax.persistence.*;
 
 @Entity
-public class MedicalPoint
-{
+public class MedicalPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,67 +17,69 @@ public class MedicalPoint
     @OneToOne(cascade = CascadeType.MERGE)
     private Sector sector;
 
-    public MedicalPoint(String name, Specialization specialization, Address address)
-    {
+    public MedicalPoint(String name, Specialization specialization, Address address) {
         this.name = name;
         this.specialization = specialization;
         this.address = address;
-        location = Location.fromAddress(address);
-        sector = Sector.fromLocation(location);
     }
-    public MedicalPoint(String name)
-    {
+
+    public MedicalPoint(String name) {
         this.name = name;
     }
 
-    public MedicalPoint() {}
+    public MedicalPoint(MedicalPoint other) {
+        this.name = other.getName();
+        this.specialization = other.getSpecialization();
+        this.address = other.getAddress();
+        this.location = other.getLocation();
+        this.sector = other.getSector();
+    }
 
-    public Long getId()
-    {
+    public MedicalPoint() {
+    }
+
+    public Long getId() {
         return id;
     }
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
-    public Address getAddress()
-    {
+    public Address getAddress() {
         return address;
     }
-    public void setAddress(Address address)
-    {
+    public void setAddress(Address address) {
         this.address = address;
-        location = Location.fromAddress(address);
-        sector = Sector.fromLocation(location);
+        //TODO do something with that...
+//        location = Location.fromAddress(address);
+//        sector = Sector.fromLocation(location);
     }
-    public Specialization getSpecialization()
-    {
+    public Specialization getSpecialization() {
         return specialization;
     }
-    public void setSpecialization(Specialization specialization)
-    {
+    public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
-    public Location getLocation()
-    {
+    public Location getLocation() {
         return location;
     }
-    public Sector getSector()
-    {
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    public Sector getSector() {
         return sector;
+    }
+    public void setSector(Sector sector) {
+        this.sector = sector;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return name + ", " + address + " (" + specialization + ")";
     }
 
