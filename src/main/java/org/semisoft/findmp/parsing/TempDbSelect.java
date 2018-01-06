@@ -40,6 +40,7 @@ public class TempDbSelect {
                 String street = rs.getString("street");
                 String name = rs.getString("name");
                 String specialization = rs.getString("specialization");
+                int id = rs.getInt("id");
                 //int sector_x = rs.getInt("sector_x");
                 //int sector_y = rs.getInt("sector_y");
                 Address address = new Address(city,street,number);
@@ -78,8 +79,8 @@ public class TempDbSelect {
             String street = rs.getString("street");
             String name = rs.getString("name");
             String specialization1 = rs.getString("specialization");
-            int sector_x = rs.getInt("sector_x");
-            int sector_y = rs.getInt("sector_y");
+            //int sector_x = rs.getInt("sector_x");
+            //int sector_y = rs.getInt("sector_y");
             System.out.println(city+number+street+name);
             Address address1 = new Address(city, street, number);
             Specialization specialization2 = new Specialization(specialization);

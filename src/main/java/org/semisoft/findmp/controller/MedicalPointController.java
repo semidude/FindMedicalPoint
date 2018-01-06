@@ -69,7 +69,7 @@ public class MedicalPointController
         return medicalPointRepository.findAll();
     }
 
-   /* @RequestMapping("/parse")
+    @RequestMapping("/parse")
     public @ResponseBody Iterable<MedicalPoint> parse2(){
         //MedicalPoint medicalPoint = parser.add2();
         //medicalPointRepository.save(medicalPoint);
@@ -78,7 +78,7 @@ public class MedicalPointController
         }
         catch (IOException e){}
         return medicalPointRepository.findAll();
-    }*/
+    }
     @RequestMapping("/pars")
     public @ResponseBody Iterable<MedicalPoint> parse3(){
         //MedicalPoint medicalPoint = parser.add2();
