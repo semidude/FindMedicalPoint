@@ -107,7 +107,7 @@
 
             function showPosition(position) {
                 findClosest("Ortopeda", position.coords.latitude, position.coords.longitude);
-                //post('/showloc', {latitude: position.coords.latitude, longitude: position.coords.longitude});
+                // post('/showloc', {latitude: position.coords.latitude, longitude: position.coords.longitude});
             }
 
         }

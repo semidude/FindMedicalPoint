@@ -1,92 +1,71 @@
 package org.semisoft.findmp.service;
 
-import org.semisoft.findmp.domain.Location;
-import org.semisoft.findmp.domain.MedicalPoint;
-import org.semisoft.findmp.domain.Sector;
-import org.semisoft.findmp.domain.Specialization;
+import org.semisoft.findmp.domain.*;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
+import org.semisoft.findmp.domain.repository.SectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class FindMedicalPointService
 {
     private MedicalPointRepository medicalPointRepository;
+    private SectorRepository sectorRepository;
     private Location userLocation;
 
     @Autowired
-    public FindMedicalPointService(MedicalPointRepository medicalPointRepository) {
+    public FindMedicalPointService(MedicalPointRepository medicalPointRepository, SectorRepository sectorRepository) {
         this.medicalPointRepository = medicalPointRepository;
+        this.sectorRepository = sectorRepository;
     }
 
-    public ArrayList<MedicalPoint> findMedicalPoints(Specialization specialization, double latitude, double longitude) {
+    public List<MedicalPoint> findMedicalPoints(Specialization specialization, double latitude, double longitude) {
 
         userLocation = new Location(latitude, longitude);
 
         Sector userSector = Sector.fromLocation(userLocation);
 
-        List<Sector> nearbySectors = findNearbySectors(userSector);
+        Set<MedicalPoint> medicalPoints = new HashSet<>();
+        ExpandableArea area = new ExpandableArea(userSector);
 
-        return findClosestMedicalPointsInSectors(nearbySectors, specialization);
-    }
+        while (medicalPoints.size() < 5) {
 
-    private List<Sector> findNearbySectors(Sector sector) {
+            medicalPoints.addAll(
+                    findClosestMedicalPointsInSectors(area.getSectors(), specialization));
 
-        int x = sector.getX();
-        int y = sector.getY();
-
-        List<Sector> sectors = new ArrayList<>();
-        Sector.SectorCorner corner = sector.getLocationSectorCorner(userLocation);
-
-        sectors.add(sector);
-
-        switch (corner) {
-            case TOP_LEFT:
-                sectors.add(new Sector(x - 1, y));
-                sectors.add(new Sector(x - 1, y + 1));
-                sectors.add(new Sector(x, y + 1));
-                break;
-            case BOTTOM_LEFT:
-                sectors.add(new Sector(x - 1, y));
-                sectors.add(new Sector(x - 1, y - 1));
-                sectors.add(new Sector(x, y - 1));
-                break;
-            case BOTTOM_RIGHT:
-                sectors.add(new Sector(x + 1, y));
-                sectors.add(new Sector(x + 1, y - 1));
-                sectors.add(new Sector(x, y - 1));
-                break;
-            case TOP_RIGHT:
-                sectors.add(new Sector(x + 1, y));
-                sectors.add(new Sector(x + 1, y + 1));
-                sectors.add(new Sector(x, y + 1));
-                break;
+            area.expand();
         }
 
-        return sectors;
+        System.out.println("sectors in area: " + area.getSectors().size());
+        System.out.println("sectors: " + area.getSectors());
+
+        List<MedicalPoint> medicalPointList = new ArrayList<>(medicalPoints);
+        sortByDistanceFromUser(medicalPointList);
+
+        return medicalPointList.subList(0, 5);
     }
 
-    private ArrayList<MedicalPoint>
+    private Set<MedicalPoint>
     findClosestMedicalPointsInSectors(List<Sector> sectors, Specialization specialization) {
 
-        ArrayList<MedicalPoint> medicalPoints = new ArrayList<>();
+        Set<MedicalPoint> medicalPoints = new HashSet<>();
 
         for (Sector sector : sectors) {
+
             List<MedicalPoint> medicalPointsInSector =
                     (List<MedicalPoint>) medicalPointRepository.findBySector(sector);
 
             if (nullOrEmpty(medicalPointsInSector))
                 continue;
 
-            medicalPoints.addAll(
-                    filterBy(medicalPointsInSector, specialization));
-        }
+//            medicalPoints.addAll(
+//                    filterBy(medicalPointsInSector, specialization));
 
-        sortByDistanceFromUser(medicalPoints);
+            medicalPoints.addAll(medicalPointsInSector);
+        }
 
         return medicalPoints;
     }
@@ -103,13 +82,12 @@ public class FindMedicalPointService
     }
 
     private void sortByDistanceFromUser(List<MedicalPoint> medicalPoints) {
-        medicalPoints.sort((m1, m2) -> {
-            double d1 = Location.calculateDistance(userLocation, Location.fromAddress(m1.getAddress()));
-            double d2 = Location.calculateDistance(userLocation, Location.fromAddress(m2.getAddress()));
 
-            if (d1 > d2) return 1;
-            else if (d2 < d1) return -1;
-            else return 0;
+        medicalPoints.sort((m1, m2) -> {
+            double d1 = Location.calculateDistance(userLocation, m1.getLocation());
+            double d2 = Location.calculateDistance(userLocation, m2.getLocation());
+
+            return Double.compare(d1, d2);
         });
     }
 }
