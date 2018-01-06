@@ -32,30 +32,6 @@ public class Location {
         this(0.0, 0.0);
     }
 
-    public static Location fromAddress(Address address) {
-
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyC8lZAnEPg089md9w8N8HgtlNmSLpmtOE4")
-                .build();
-        GeocodingResult[] results = new GeocodingResult[0];
-
-        Location location;
-
-        try {
-            results = GeocodingApi.geocode(context, address.toString()).await();
-        }
-        catch (ApiException | InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-
-        if (results.length > 0)
-            location = new Location(results[0].geometry.location.lat, results[0].geometry.location.lng);
-        else
-            location = new Location(0, 0);
-
-        return location;
-    }
-
     public static double calculateDistance(Location location1, Location location2) {
 
         return distance(location1.getLatitude(), location1.getLongitude(), location2.getLatitude(), location2.getLongitude(), 'K');

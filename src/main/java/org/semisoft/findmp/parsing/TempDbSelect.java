@@ -4,10 +4,10 @@ import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
+import org.semisoft.findmp.service.MedicalPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,6 +17,8 @@ import java.util.List;
 
 @Service
 public class TempDbSelect {
+    @Autowired
+    private MedicalPointService medicalPointService;
     @Autowired
     private static MedicalPointRepository medicalPointRepository;
     public List<MedicalPoint> select (){
@@ -45,7 +47,7 @@ public class TempDbSelect {
                 //int sector_y = rs.getInt("sector_y");
                 Address address = new Address(city,street,number);
                 Specialization specialization1 = new Specialization(specialization);
-                MedicalPoint medicalPoint = new MedicalPoint(name,specialization1,address);
+                MedicalPoint medicalPoint = medicalPointService.createAndLocalizeMedicalPoint(name,specialization1,address);
                 medicalPoints.add(medicalPoint);
             }
             //}
@@ -84,7 +86,7 @@ public class TempDbSelect {
             System.out.println(city+number+street+name);
             Address address1 = new Address(city, street, number);
             Specialization specialization2 = new Specialization(specialization);
-            medicalPoint = new MedicalPoint(name, specialization2, address);
+            medicalPoint = medicalPointService.createAndLocalizeMedicalPoint(name, specialization2, address);
             //}
             rs.close();
             stmt.close();

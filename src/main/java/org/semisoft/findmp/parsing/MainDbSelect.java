@@ -3,6 +3,8 @@ package org.semisoft.findmp.parsing;
 import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.MedicalPoint;
 import org.semisoft.findmp.domain.Specialization;
+import org.semisoft.findmp.service.MedicalPointService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @Service
 public class MainDbSelect {
+    @Autowired
+    private MedicalPointService medicalPointService;
+
     public List<MedicalPoint> select (){
         Connection c = null;
         Statement stmt = null;
@@ -41,7 +46,7 @@ public class MainDbSelect {
                 int id = rs.getInt("id");
                 Address address = new Address(city,street,number);
                 Specialization specialization1 = new Specialization(specialization);
-                MedicalPoint medicalPoint = new MedicalPoint(name,specialization1,address);
+                MedicalPoint medicalPoint = medicalPointService.createAndLocalizeMedicalPoint(name,specialization1,address);
                 medicalPoints.add(medicalPoint);
             }
             //}

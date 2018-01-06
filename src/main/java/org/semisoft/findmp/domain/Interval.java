@@ -1,6 +1,5 @@
 package org.semisoft.findmp.domain;
 
-public class Interval
-{
-
+//not used now
+public class Interval {
 }
