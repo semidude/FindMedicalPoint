@@ -197,7 +197,7 @@ public class Sheep implements Callable<List<MedicalPoint>> {
                         }
                         Specialization specialization = new Specialization(type);
                         Address address = new Address(city, street, number);
-                        MedicalPoint medicalPoint = new MedicalPoint(name, specialization, address, false);
+                        MedicalPoint medicalPoint = new MedicalPoint(name, specialization, address);
                         System.out.println("ByĹ‚em tu");
                         medicalPoints.add(medicalPoint);
                         TempDbAdd.add(medicalPoint);
