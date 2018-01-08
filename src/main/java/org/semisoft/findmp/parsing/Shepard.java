@@ -44,7 +44,6 @@ public class Shepard {
         for (int woj = 7; woj <= 7; woj++) { //Ustawianie ile wojewĂłdztw ma parsawac
             int licz1 = 0;
             ExecutorService executor = Executors.newFixedThreadPool(lt);
-            List<Future<List<MedicalPoint>>> list = new ArrayList<Future<List<MedicalPoint>>>();
             while (licz1 < 10) {
                 try {
                     String elUrl = "https://zip.nfz.gov.pl/GSL/GSL/UniwersalneSearch?specjalizacja=&wojewodztwo=";
@@ -73,6 +72,7 @@ public class Shepard {
                     num = t.intValue();
                     int iteracja = 1;
                     int koniec = 0;
+                    List<Future<List<MedicalPoint>>> list = new ArrayList<Future<List<MedicalPoint>>>();
                     while (iteracja <= num && koniec == 0) {
                         //links = null;
                         //System.out.println(sessionId);

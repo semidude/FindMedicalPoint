@@ -3,29 +3,32 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.*;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.jsoup.Connection.Response;
+import java.sql.Connection;
+import org.semisoft.findmp.domain.Address;
 import org.semisoft.findmp.domain.MedicalPoint;
+import org.semisoft.findmp.domain.Specialization;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
+import org.semisoft.findmp.service.LocationService;
+import org.semisoft.findmp.service.MedicalPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.OSEnvironment;
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.util.Map;
 
 @Service
 public class TempDbAdd {
     @Autowired
     private static MedicalPointRepository medicalPointRepository;
+    @Autowired
+    private MedicalPointService medicalPointService;
+    @Autowired
+    private LocationService locationService;
     public static void create (){
         Connection c = null;
         Statement stmt = null;
@@ -38,15 +41,6 @@ public class TempDbAdd {
             String sql;
             sql = "DROP TABLE IF EXISTS datatemp";
             stmt.executeUpdate(sql);
-            /*sql = "CREATE TABLE data " +
-                    "(ID INT    NOT NULL," +
-                    " city	TEXT, " +
-                    " number	TEXT, " +
-                    " street	TEXT, " +
-                    " name	TEXT," +
-                    " sector_x	INT ," +
-                    " sector_y	INT ," +
-                    "specialization	TEXT)";*/
             System.out.println("Create");
             sql = "CREATE TABLE datatemp " +
                     "(ID bigint(20)  NOT NULL AUTO_INCREMENT PRIMARY KEY," +
@@ -56,6 +50,8 @@ public class TempDbAdd {
                     " name	varchar(255)," +
                     " sector_x	INT ," +
                     " sector_y	INT ," +
+                    "latitude DOUBLE ," +
+                    "longitude DOUBLE ," +
                     "specialization	varchar(255))";
             stmt.executeUpdate(sql);
             System.out.println("After Create");
@@ -67,65 +63,88 @@ public class TempDbAdd {
         }
     }
     public static void add (MedicalPoint medicalPoint) throws IOException{
-        //List<MedicalPoint> medicalPoints = new ArrayList<MedicalPoint>();
         Connection c = null;
         Statement stmt = null;
         Shepard shepard = new Shepard();
         Parser parser = new Parser();
-        //int id = 0;
         try {
-            /*Class.forName("org.postgresql.Driver");
-            c = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/temp_db",
-                            "postgres", "piotrek");*/
             Class.forName("com.mysql.jdbc.Driver");
             c = DriverManager
                     .getConnection("jdbc:mysql://127.0.0.1:3306/db_example","springuser","ThePassword");
             stmt = c.createStatement();
             String sql;
-            /*if (thread == 1) {
-                sql = "DROP TABLE IF EXISTS data";
-                stmt.executeUpdate(sql);
-            /*sql = "CREATE TABLE data " +
-                    "(ID INT    NOT NULL," +
-                    " city	TEXT, " +
-                    " number	TEXT, " +
-                    " street	TEXT, " +
-                    " name	TEXT," +
-                    " sector_x	INT ," +
-                    " sector_y	INT ," +
-                    "specialization	TEXT)";
-                sql = "CREATE TABLE data " +
-                        "(ID bigint(20)    NOT NULL," +
-                        " city	varchar(255), " +
-                        " number	varchar(255), " +
-                        " street	varchar(255), " +
-                        " name	varchar(255)," +
-                        " sector_x	INT ," +
-                        " sector_y	INT ," +
-                        "specialization	varchar(255))";
-                stmt.executeUpdate(sql);
-            }*/
-
-            //medicalPoints = shepard.add();
-            //for (MedicalPoint medicalPoint: medicalPoints){
-                //id+=1;
-                sql = "Insert into datatemp (city,number,street,name,specialization) VALUES (" +
-                        "'"+medicalPoint.getAddress().getCity()+"'," +
-                        "'"+medicalPoint.getAddress().getNumber()+"'," +
-                        "'"+medicalPoint.getAddress().getStreet()+"'," +
-                        "'"+medicalPoint.getName()+"'," +
-                        //""+medicalPoint.getSector().getX()+"," +
-                        //""+medicalPoint.getSector().getY()+"," +
-                        "'"+medicalPoint.getSpecialization().getName()+"');";
-                stmt.executeUpdate(sql);
-
-            //}
+            sql = "Insert into datatemp (city,number,street,name,sector_x, sector_y,latitude,longitude,specialization) VALUES (" +
+                    "'"+medicalPoint.getAddress().getCity()+"'," +
+                    "'"+medicalPoint.getAddress().getNumber()+"'," +
+                    "'"+medicalPoint.getAddress().getStreet()+"'," +
+                    "'"+medicalPoint.getName()+"'," +
+                    ""+0+"," +
+                    ""+0+"," +
+                    "0," +
+                    "0," +
+                    "'"+medicalPoint.getSpecialization().getName()+"');";
+            stmt.executeUpdate(sql);
             stmt.close();
             c.close();
         }
         //catch (IOException io){}
         catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            //System.exit(0);
+        }
+    }
+    public void sector () {
+        java.sql.Connection c = null;
+        Statement stmt = null;
+        Statement stmtbis = null;
+        List<MedicalPoint> medicalPoints = new ArrayList<MedicalPoint>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            c = DriverManager
+                    .getConnection("jdbc:mysql://127.0.0.1:3306/db_example","springuser","ThePassword");
+            stmt = c.createStatement();
+            stmtbis = c.createStatement();
+            //String sql = "Select id from data order by id desc";
+            //ResultSet rs = stmt.executeQuery(sql);
+            //int max = rs.getInt("id");
+            //for (int id = 1;id<=max;id++) {
+            String sql = "SELECT * from datatemp where latitude = 0 and longitude = 0";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                String city = rs.getString("city");
+                String number = rs.getString("number");
+                String street = rs.getString("street");
+                String name = rs.getString("name");
+                String specialization = rs.getString("specialization");
+                int id = rs.getInt("id");
+                //MedicalPoint medicalPoint = medicalPointService.createAndLocalizeMedicalPoint(name,new Specialization(specialization),new Address(city,street,number));
+                MedicalPoint medicalPoint = new MedicalPoint(name, new Specialization(specialization), new Address(city, street, number));
+                medicalPoint.setLocation(locationService.fromAddress(medicalPoint.getAddress()));
+
+//                sql = "UPDATE datatemp set sector_x = '"+medicalPoint.getSector().getX()+"' where ID='"+id+"';";
+//                stmtbis.executeUpdate(sql);
+//                sql = "UPDATE datatemp set sector_y = '"+medicalPoint.getSector().getY()+"' where ID='"+id+"';";
+//                stmtbis.executeUpdate(sql);
+                sql = "UPDATE datatemp set latitude = '"+medicalPoint.getLocation().getLatitude()+"' where ID='"+id+"';";
+                stmtbis.executeUpdate(sql);
+                sql = "UPDATE datatemp set longitude = '"+medicalPoint.getLocation().getLongitude()+"' where ID='"+id+"';";
+                stmtbis.executeUpdate(sql);
+                /*sql = "UPDATE datatemp set sector_x = "+0+" where ID='"+id+"';";
+                stmtbis.executeUpdate(sql);
+                sql = "UPDATE datatemp set sector_y = "+0+" where ID='"+id+"';";
+                stmtbis.executeUpdate(sql);
+                sql = "UPDATE datatemp set latitude = "+0+" where ID='"+id+"';";
+                stmtbis.executeUpdate(sql);
+                sql = "UPDATE datatemp set longitude = "+0+" where ID='"+id+"';";
+                stmtbis.executeUpdate(sql);*/
+
+            }
+            rs.close();
+            stmt.close();
+            stmtbis.close();
+            c.close();
+        }catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             //System.exit(0);

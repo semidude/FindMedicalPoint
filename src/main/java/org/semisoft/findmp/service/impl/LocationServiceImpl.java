@@ -18,7 +18,7 @@ public class LocationServiceImpl implements LocationService {
     public Location fromAddress(Address address) {
 
         GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyC8lZAnEPg089md9w8N8HgtlNmSLpmtOE4")
+                .apiKey("AIzaSyA7LUAz1n3CR1jJicUiRWHNDRF1ODvJsA4")
                 .build();
         GeocodingResult[] results = new GeocodingResult[0];
 

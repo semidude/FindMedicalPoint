@@ -1,10 +1,9 @@
 package org.semisoft.findmp.parsing;
 
-import org.semisoft.findmp.domain.Address;
-import org.semisoft.findmp.domain.MedicalPoint;
-import org.semisoft.findmp.domain.Specialization;
+import org.semisoft.findmp.domain.*;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.service.MedicalPointService;
+import org.semisoft.findmp.service.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,8 @@ public class TempDbSelect {
     private MedicalPointService medicalPointService;
     @Autowired
     private static MedicalPointRepository medicalPointRepository;
+    @Autowired
+    private SectorService sectorService;
     public List<MedicalPoint> select (){
         Connection c = null;
         Statement stmt = null;
@@ -30,11 +31,7 @@ public class TempDbSelect {
             c = DriverManager
                     .getConnection("jdbc:mysql://127.0.0.1:3306/db_example","springuser","ThePassword");
             stmt = c.createStatement();
-            //String sql = "Select id from data order by id desc";
-            //ResultSet rs = stmt.executeQuery(sql);
-            //int max = rs.getInt("id");
-            //for (int id = 1;id<=max;id++) {
-            String sql = "SELECT * from datatemp";
+            String sql = "SELECT * from datatemp WHERE latitude != 0";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 String city = rs.getString("city");
@@ -42,12 +39,17 @@ public class TempDbSelect {
                 String street = rs.getString("street");
                 String name = rs.getString("name");
                 String specialization = rs.getString("specialization");
-                int id = rs.getInt("id");
-                //int sector_x = rs.getInt("sector_x");
-                //int sector_y = rs.getInt("sector_y");
+//                int sector_x = rs.getInt("sector_x");
+//                int sector_y = rs.getInt("sector_y");
+                double latitude = rs.getDouble("latitude");
+                double longitude = rs.getDouble("longitude");
                 Address address = new Address(city,street,number);
                 Specialization specialization1 = new Specialization(specialization);
-                MedicalPoint medicalPoint = medicalPointService.createAndLocalizeMedicalPoint(name,specialization1,address);
+                Location location = new Location(latitude,longitude);
+                //Sector sector = new Sector(sector_x,sector_y);
+                MedicalPoint medicalPoint = new MedicalPoint(name, specialization1,address);
+                medicalPoint.setSector(sectorService.fromLocation(location));
+                medicalPoint.setLocation(location);
                 medicalPoints.add(medicalPoint);
             }
             //}
