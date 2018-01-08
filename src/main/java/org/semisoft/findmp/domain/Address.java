@@ -5,8 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Address
-{
+public class Address {
     @Id
     @GeneratedValue
     private Long id;
@@ -14,18 +13,17 @@ public class Address
     private String street;
     private String number;
 
-    public Address() {}
+    public Address() {
+    }
 
-    public Address(String city, String street, String number)
-    {
+    public Address(String city, String street, String number) {
         this.city = city;
         this.street = street;
         this.number = number;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return city + " " + street + " " + number;
     }
 
@@ -34,28 +32,27 @@ public class Address
         return this.toString().equals(o.toString());
     }
 
-    public String getCity()
-    {
+    public String getCity() {
         return city;
     }
-    public void setCity(String city)
-    {
+
+    public void setCity(String city) {
         this.city = city;
     }
-    public String getStreet()
-    {
+
+    public String getStreet() {
         return street;
     }
-    public void setStreet(String street)
-    {
+
+    public void setStreet(String street) {
         this.street = street;
     }
-    public String getNumber()
-    {
+
+    public String getNumber() {
         return number;
     }
-    public void setNumber(String number)
-    {
+
+    public void setNumber(String number) {
         this.number = number;
     }
 }

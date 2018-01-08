@@ -7,8 +7,7 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
-public class Specialization
-{
+public class Specialization {
     @Id
     @GeneratedValue
     private Long id;
@@ -16,34 +15,31 @@ public class Specialization
     @OneToMany
     private Set<Keyword> keywords;
 
-    public Specialization(String name)
-    {
+    public Specialization(String name) {
         this.name = name;
     }
 
-    public Specialization()
-    {
+    public Specialization() {
         this.name = "";
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
-    public void setName(String name)
-    {
+
+    public void setName(String name) {
         this.name = name;
     }
-    public Set<Keyword> getKeywords()
-    {
+
+    public Set<Keyword> getKeywords() {
         return keywords;
     }
-    public void addKeyword(Keyword keyword)
-    {
+
+    public void addKeyword(Keyword keyword) {
         keywords.add(keyword);
     }
-    public void addAllKeywords(Set<Keyword> keywords)
-    {
+
+    public void addAllKeywords(Set<Keyword> keywords) {
         this.keywords.addAll(keywords);
     }
 

@@ -6,8 +6,7 @@ import javax.persistence.Id;
 
 //not used now
 @Entity
-public class Keyword
-{
+public class Keyword {
     @Id
     @GeneratedValue
     private Long id;
