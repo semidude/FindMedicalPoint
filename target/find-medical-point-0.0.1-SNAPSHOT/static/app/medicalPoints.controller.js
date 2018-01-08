@@ -47,10 +47,25 @@
                 var url = "/medicalPoints/addmp?name="+name+"&specialization="+specialization+"&adress="+city+";"+street+";"+number;
                 $http.post(url).then(function(response)
                 {
-
                     vm.medicalPoints = response.data;
-
                 });
+            }
+
+            function getJSONP(url, success) {
+
+                var ud = '_' + +new Date,
+                    script = document.createElement('script'),
+                    head = document.getElementsByTagName('head')[0]
+                        || document.documentElement;
+
+                window[ud] = function(data) {
+                    head.removeChild(script);
+                    success && success(data);
+                };
+
+                script.src = url.replace('callback=?', 'callback=' + ud);
+                head.appendChild(script);
+
             }
 
             function findClosest(specialization, lat, lon)
@@ -61,6 +76,17 @@
                 {
                     vm.medicalPoints = response.data;
                 });
+
+                var googleUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&sensor=true"
+                // var a = $http.get(googleUrl);
+                // a.then(function (response)
+                // {
+                //     alert(response.data);
+                // })
+
+                getJSONP(googleUrl, function(data) {
+                    alert(data);
+                })
             }
 
             function findClosestByAddress(specialization, city, street, number)
@@ -69,7 +95,7 @@
                 var findmpPromise = $http.get(url);
                 findmpPromise.then(function(response)
                 {
-                    vm.medicalPoints = response.data;
+                    vm.medicalPoints = response.
                 });
             }
 

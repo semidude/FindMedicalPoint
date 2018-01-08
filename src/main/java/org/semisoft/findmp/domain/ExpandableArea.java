@@ -1,19 +1,14 @@
 package org.semisoft.findmp.domain;
 
-import org.semisoft.findmp.service.SectorService;
-import org.semisoft.findmp.service.impl.SectorServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.semisoft.findmp.util.EdgeSector;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ExpandableArea {
     private List<Sector> sectors = new ArrayList<>();
-    private List<SectorDecorator> edge = new ArrayList<>();
+    private List<EdgeSector> edge = new ArrayList<>();
 
     public void addSector(Sector sector) {
         sectors.add(sector);
@@ -27,11 +22,11 @@ public class ExpandableArea {
         return sectors;
     }
 
-    public void addEdgeSector(SectorDecorator sector) {
+    public void addEdgeSector(EdgeSector sector) {
         edge.add(sector);
     }
 
-    public void addEdgeSectors(Collection<SectorDecorator> sectors) {
+    public void addEdgeSectors(Collection<EdgeSector> sectors) {
         edge.addAll(sectors);
     }
 
@@ -39,7 +34,7 @@ public class ExpandableArea {
         edge.clear();
     }
 
-    public List<SectorDecorator> getEdge() {
+    public List<EdgeSector> getEdge() {
         return edge;
     }
 

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {FindMedicalPointApplication.class, SectorServiceTestConfiguration.class})
@@ -31,6 +33,25 @@ public class ExpandableAreaTest {
         expandableAreaService.expand(area);
         expandableAreaService.expand(area);
 
-        assertEquals(49, area.getSectors().size());
+        List<Sector> areaSectors = area.getSectors();
+        List<Sector> generatedSectors = generateAreaLayers(3);
+
+        Collections.sort(areaSectors);
+        Collections.sort(generatedSectors);
+
+        assertEquals(49, areaSectors.size());
+        assertEquals(generatedSectors, areaSectors);
+    }
+
+    private List<Sector> generateAreaLayers(int layers) {
+        List<Sector> square = new ArrayList<>();
+
+        for (int i = -layers; i <= layers; ++i) {
+            for (int j = -layers; j <= layers; ++j) {
+                square.add(new Sector(i, j));
+            }
+        }
+
+        return square;
     }
 }

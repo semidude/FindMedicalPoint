@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Entity
-public class Sector {
+public class Sector implements Comparable<Sector> {
     @Id
     @GeneratedValue
     private Long id;
@@ -78,5 +78,21 @@ public class Sector {
     public boolean equals(Object o) {
         Sector other = (Sector) o;
         return x == other.getX() && y == other.getY();
+    }
+
+    @Override
+    public int compareTo(Sector other) {
+        if (getX() < other.getX())
+            return -1;
+        else if (getX() > other.getX())
+            return 1;
+        else {
+            if (getY() < other.getY())
+                return -1;
+            else if (getY() > other.getY())
+                return 1;
+            else
+                return 0;
+        }
     }
 }

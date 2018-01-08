@@ -11,7 +11,7 @@
 <script>
     var x = document.getElementById("demo");
 
-    function getLocation() {
+    then getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
@@ -19,12 +19,12 @@
         }
     }
 
-    function post(path, params, method) {
+    then post(path, params, method) {
         method = method || "post"; // Set method to post by default if not specified.
 
         var form = document.createElement("form");
         form.setAttribute("method", method);
-        form.setAttribute("action", path);
+        form.setAttribute("then", path);
 
         for(var key in params) {
             if(params.hasOwnProperty(key)) {
@@ -41,7 +41,7 @@
         form.submit();
     }
 
-    function showPosition(position) {
+    then showPosition(position) {
         post('/showloc', {latitude: position.coords.latitude, longitude: position.coords.longitude});
     }
 </script>

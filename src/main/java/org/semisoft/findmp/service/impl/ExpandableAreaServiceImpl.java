@@ -2,10 +2,11 @@ package org.semisoft.findmp.service.impl;
 
 import org.semisoft.findmp.domain.ExpandableArea;
 import org.semisoft.findmp.domain.Sector;
-import org.semisoft.findmp.domain.SectorDecorator;
+import org.semisoft.findmp.util.EdgeSector;
 import org.semisoft.findmp.service.ExpandableAreaService;
 import org.semisoft.findmp.service.SectorService;
-import org.semisoft.findmp.util.Flags;
+import org.semisoft.findmp.util.Rule;
+import org.semisoft.findmp.util.Rules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,51 +24,51 @@ public class ExpandableAreaServiceImpl implements ExpandableAreaService {
     public ExpandableArea createExpandableArea(Sector origin) {
         ExpandableArea area = new ExpandableArea();
         area.addSector(origin);
-        area.addEdgeSector(new SectorDecorator(origin, LEFT | TOP | RIGHT | BOTTOM));
+        area.addEdgeSector(new EdgeSector(origin, LEFT | TOP | RIGHT | BOTTOM));
         return area;
     }
 
     @Override
     public void expand(ExpandableArea area) {
-        List<SectorDecorator> oldEdge = new ArrayList<>(area.getEdge());
+        List<EdgeSector> oldEdge = new ArrayList<>(area.getEdge());
         area.clearEdge();
 
-        for (SectorDecorator sector : oldEdge) {
+        for (EdgeSector edgeSector : oldEdge) {
 
-            Flags flags = sector.getFlags();
-            int x = sector.getX();
-            int y = sector.getY();
+            List<EdgeSector> newSectors = new ArrayList<>();
 
-            List<SectorDecorator> newSectors = new ArrayList<>();
+            Rules<EdgeSector> rules = new Rules<>( edgeSector,
+                                //when...                         //then...
+                    new Rule<>( es -> es.hasFlag(LEFT),           es -> newSectors.add( generateSector(es, -1, 0, LEFT))),
+                    new Rule<>( es -> es.hasFlag(TOP),            es -> newSectors.add( generateSector(es, 0, 1, TOP))),
+                    new Rule<>( es -> es.hasFlag(RIGHT),          es -> newSectors.add( generateSector(es, 1, 0, RIGHT))),
+                    new Rule<>( es -> es.hasFlag(BOTTOM),         es -> newSectors.add( generateSector(es, 0, -1, BOTTOM))),
+                    new Rule<>( es -> es.hasFlag(LEFT | TOP),     es -> newSectors.add( generateSector(es, -1, 1, LEFT | TOP))),
+                    new Rule<>( es -> es.hasFlag(RIGHT | TOP),    es -> newSectors.add( generateSector(es, 1, 1, RIGHT | TOP))),
+                    new Rule<>( es -> es.hasFlag(LEFT | BOTTOM),  es -> newSectors.add( generateSector(es, -1, -1, LEFT | BOTTOM))),
+                    new Rule<>( es -> es.hasFlag(RIGHT | BOTTOM), es -> newSectors.add( generateSector(es, 1, -1, RIGHT | BOTTOM)))
+            );
 
-            if (flags.hasFlag(LEFT))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x - 1, y), LEFT));
+            rules.applyRules();
 
-            if (flags.hasFlag(TOP))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x, y + 1), TOP));
-
-            if (flags.hasFlag(RIGHT))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x + 1, y ), RIGHT));
-
-            if (flags.hasFlag(BOTTOM))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x, y - 1), BOTTOM));
-
-            if (flags.hasFlag(LEFT) && flags.hasFlag(TOP))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x - 1, y + 1 ), LEFT | TOP));
-
-            if (flags.hasFlag(RIGHT) && flags.hasFlag(TOP))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x + 1, y + 1), RIGHT | TOP));
-
-            if (flags.hasFlag(LEFT) && flags.hasFlag(BOTTOM))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x - 1, y - 1), LEFT | BOTTOM));
-
-            if (flags.hasFlag(RIGHT) && flags.hasFlag(BOTTOM))
-                newSectors.add(new SectorDecorator(sectorService.fromCoordinates(x + 1, y - 1), RIGHT | BOTTOM));
-
-            area.addSectors(newSectors.stream().map(decorator -> decorator.getSector()).collect(Collectors.toList()));
+            area.addSectors(hullSectors(newSectors));
             area.addEdgeSectors(newSectors);
-
         }
+    }
+
+    private EdgeSector generateSector(EdgeSector es, int xOffset, int yOffset, int flags) {
+        return new EdgeSector(
+                sectorService.fromCoordinates(
+                    es.getX() + xOffset,
+                    es.getY() + yOffset),
+                    flags);
+    }
+
+    private List<Sector> hullSectors(List<EdgeSector> edgeSectors) {
+        return edgeSectors
+                .stream()
+                .map(decorator -> decorator.getSector())
+                .collect(Collectors.toList());
     }
 
     @Override
