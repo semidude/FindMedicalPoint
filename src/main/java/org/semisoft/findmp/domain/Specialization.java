@@ -12,8 +12,6 @@ public class Specialization {
     @GeneratedValue
     private Long id;
     private String name;
-    @OneToMany
-    private Set<Keyword> keywords;
 
     public Specialization(String name) {
         this.name = name;
@@ -29,18 +27,6 @@ public class Specialization {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Keyword> getKeywords() {
-        return keywords;
-    }
-
-    public void addKeyword(Keyword keyword) {
-        keywords.add(keyword);
-    }
-
-    public void addAllKeywords(Set<Keyword> keywords) {
-        this.keywords.addAll(keywords);
     }
 
     @Override

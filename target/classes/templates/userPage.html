@@ -18,7 +18,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Find Medical Point app</a>
+                <a class="navbar-brand" href="#">Welcome to FindMedicalPoint app!</a>
             </div>
             <p class="navbar-text navbar-right" th:text="'Signed in as ' + ${username}" style="margin-right: 10px;">Signed in as Anonymus</p>
         </div>
@@ -29,33 +29,16 @@
     <div class="row">
         <div class="col-lg-offset-2 col-lg-8">
 
-            <div class="btn-group" role="group">
-                <button ng-click="vm.getAll()" type="button" class="btn btn-default">All</button>
-            </div> <br/>
-            Find closest medical point <br/>
-            <input type = "text" placeholder="Specialization" ng-model="specializationSearch1.specialization.name" />
+            You're ill but have no idea where to find your doctor? Just type what kind of medical care you need, then use 'Localize Me' (if you like) and click 'Search'<br/><br/>
+            <input type = "text" placeholder="specialization" ng-model="specializationSearch1.specialization.name" />
             <input type = "text" placeholder="city" ng-model="addressSearch1.address.city" />
             <input type = "text" placeholder="street" ng-model="addressSearch1.address.street" />
             <input type = "text" placeholder="number" ng-model="addressSearch1.address.number" />
             <button ng-click="vm.getLocation()" type="button" class="btn btn-default">Localize Me</button>
             <button ng-click="vm.findClosestByAddress(specializationSearch1.specialization.name, addressSearch1.address.city, addressSearch1.address.street, addressSearch1.address.number)" type="button" class="btn btn-default">Search</button>
             <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        <input type = "text" placeholder="name" ng-model="nameSearch.name" /> </th>
-                    <th>
-                        <input type = "text" placeholder="city" ng-model="addressSearch.address.city" /> <br/>
-                        <input type = "text" placeholder="street" ng-model="addressSearch.address.street" /><br/>
-                        <input type = "text" placeholder="number" ng-model="addressSearch.address.number" /></th>
-                    <th>
-                        <input type = "text" placeholder="specialization" ng-model="specializationSearch.specialization.name" /> </th>
-                    <th style="width: 90px"></th>
-                    <th> <button ng-click="vm.addMedicalPoint(nameSearch.name, specializationSearch.specialization.name, addressSearch.address.city, addressSearch.address.street, addressSearch.address.number)" type="button" class="btn btn-default">Add</button> </th>
-                </tr>
-                </thead>
                 <tbody>
-                <tr ng-repeat="medicalPoint in vm.medicalPoints  | filter: nameSearch | filter: addressSearch | filter: specializationSearch ">
+                <tr ng-repeat="medicalPoint in vm.medicalPoints">
                     <td>{{medicalPoint.name}}</td>
                     <td>{{medicalPoint.address.city}} {{medicalPoint.address.street}} {{medicalPoint.address.number}}</td>
                     <td>{{medicalPoint.specialization.name}}</td>

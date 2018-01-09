@@ -104,8 +104,31 @@
             }
 
             function showPosition(position) {
+                //===================================================================================
+                // to też musisz zmienić, bo jest z palca wpisane 'Ortopeda'
+                // ~Radek
+                //===================================================================================
                 findClosest("Ortopeda", position.coords.latitude, position.coords.longitude);
-                // post('/showloc', {latitude: position.coords.latitude, longitude: position.coords.longitude});
+
+
+                //===================================================================================
+                // Demonstracja pobierania adresu na podstawie lokalizacji
+                // Olaf, odkomentuj to, żeby zobaczyć jak działa
+                // ~Radek
+                //===================================================================================
+                // var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true"
+                // var degeocodePromise = $http.get(url);
+                // degeocodePromise.then(function (response)
+                // {
+                //     alert(
+                //     response.data.results[0].address_components[0].long_name + '\n' +
+                //     response.data.results[0].address_components[1].long_name + '\n' +
+                //     response.data.results[0].address_components[2].long_name + '\n' +
+                //     response.data.results[0].address_components[3].long_name + '\n' +
+                //     response.data.results[0].address_components[4].long_name + '\n' +
+                //     response.data.results[0].address_components[5].long_name + '\n' +
+                //     response.data.results[0].address_components[6].long_name);
+                // })
             }
 
         }
