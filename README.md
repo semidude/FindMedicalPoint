@@ -22,5 +22,6 @@
       - Password: ThePassword 
  - Run the application on server
  - In order to run the parser you need to go to the address /medicalPoints/parse
+ - In order to localize medical points in temporary database go to /medicalPoints/sector
  - After it finishes working, in order to fill the main databese go to /medicalPoints/pars
  
