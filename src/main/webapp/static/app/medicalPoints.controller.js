@@ -9,6 +9,9 @@
         function MedicalPointsController($http) {
             var vm =this;
 
+            vm.city;
+            vm.street;
+            vm.number;
             vm.medicalPoints = [];
             vm.getAll = getAll;
             vm.deleteMedicalPoint = deleteMedicalPoint;
@@ -74,6 +77,9 @@
             var x = document.getElementById("demo");
 
             function getLocation() {
+                /*vm.city = "Warszawa";
+                vm.street = "Nowowiejska";
+                vm.number = "15";*/
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(showPosition);
                 } else {
@@ -110,6 +116,17 @@
                 //===================================================================================
                 findClosest("Ortopeda", position.coords.latitude, position.coords.longitude);
 
+                //===================================================================================
+                //Tak jak tutaj na dole musisz wpisać odpowiednie wartości do vm.city, vm.street i vm.number
+                //I wtedy będzie już miodzio.
+                //Pozdrawiam,
+                //Olaf Dygas
+                //Bug designer - Semisoft
+                //===================================================================================
+
+                /*vm.city = "Warszawa";
+               vm.street = "Nowowiejska";
+               vm.number = "15";*/
 
                 //===================================================================================
                 // Demonstracja pobierania adresu na podstawie lokalizacji
