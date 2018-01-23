@@ -11,7 +11,7 @@ Popper = Popper && Popper.hasOwnProperty('default') ? Popper['default'] : Popper
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta.2): util.js
+ * Bootstrap (v4.0.0-beta.2): expanding.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */

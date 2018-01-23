@@ -1,4 +1,4 @@
-package org.semisoft.findmp.util;
+package org.semisoft.findmp.service.impl.expanding.util;
 
 public class Flags {
     private int flags = 0;

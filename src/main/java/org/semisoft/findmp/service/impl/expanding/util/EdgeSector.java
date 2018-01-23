@@ -1,33 +1,15 @@
-package org.semisoft.findmp.util;
+package org.semisoft.findmp.service.impl.expanding.util;
 
 import org.semisoft.findmp.domain.Sector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EdgeSector {
     private Sector sector;
-    private List<Sector> expanderSectors = new ArrayList<>();
     private Flags flags = new Flags();
 
     public EdgeSector(Sector sector, int flags) {
         this.sector = sector;
         this.flags.setFlags(flags);
     }
-
-//    public List<EdgeSector> expand() {
-//        List<EdgeSector> newSectors = new ArrayList<>();
-//
-//        for (Sector expanderSector : expanderSectors) {
-//
-//            Sector newSector = new Sector(sector);
-//            newSector.expandBy(expanderSector);
-//
-//            newSectors.add(new EdgeSector(newSector));
-//        }
-//
-//        return newSectors;
-//    }
 
     public void setX(int x) {
         sector.setX(x);

@@ -2,11 +2,11 @@ package org.semisoft.findmp.service.impl;
 
 import org.semisoft.findmp.domain.ExpandableArea;
 import org.semisoft.findmp.domain.Sector;
-import org.semisoft.findmp.util.EdgeSector;
+import org.semisoft.findmp.service.impl.expanding.util.EdgeSector;
 import org.semisoft.findmp.service.ExpandableAreaService;
 import org.semisoft.findmp.service.SectorService;
-import org.semisoft.findmp.util.Rule;
-import org.semisoft.findmp.util.Rules;
+import org.semisoft.findmp.service.impl.expanding.util.Rule;
+import org.semisoft.findmp.service.impl.expanding.util.Rules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

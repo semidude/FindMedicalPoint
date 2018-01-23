@@ -1,4 +1,4 @@
-package org.semisoft.findmp.util;
+package org.semisoft.findmp.service.impl.expanding.util;
 
 import java.util.Arrays;
 import java.util.List;

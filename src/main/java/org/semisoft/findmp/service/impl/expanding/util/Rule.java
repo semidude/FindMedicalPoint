@@ -1,7 +1,6 @@
-package org.semisoft.findmp.util;
+package org.semisoft.findmp.service.impl.expanding.util;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Rule<T> {

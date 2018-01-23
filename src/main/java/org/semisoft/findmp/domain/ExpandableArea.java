@@ -1,6 +1,6 @@
 package org.semisoft.findmp.domain;
 
-import org.semisoft.findmp.util.EdgeSector;
+import org.semisoft.findmp.service.impl.expanding.util.EdgeSector;
 
 import java.util.ArrayList;
 import java.util.Collection;
