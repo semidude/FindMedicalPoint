@@ -5,8 +5,16 @@
  - Radosław Panuszewski
  
  ## Purpose:
- The purpose of our solution is to provide the oppurtunity to find the most suitable medical point based on users' location or any other given, and specialization that fulfill their needs.
- Open architecture of our application also could serve as an API for NFZ's servers.
+ The purpose of our solution is to provide the oppurtunity to find the most suitable medical point based on users' location (or any other given;) and medical specialization that fulfill their needs.
+ 
+ Our REST API could also be utilized in variety of ther solutions. 
+ Example usage:
+ ```
+ /findClosest?specialization=Okulista&lat=52.241629599999996&lon=20.940932999999998
+ /findClosestByAddress?specialization=Ortopeda&address=Warszawa;Ksiecia+Janusza;39
+ ```
+ Supported countries:
+ - Poland
  
  ## Implementation:
  ![alt text](https://imageshack.com/a/img923/5241/0mlV8p.png)
