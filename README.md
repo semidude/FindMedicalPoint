@@ -7,7 +7,7 @@
  ## About the project
  The purpose of our solution is to provide the oppurtunity to find the most suitable medical point based on users' location (or any other given) and medical specialization that fulfill their needs.
  
- Our REST API could also be utilized in variety of ther solutions. 
+ Our REST API could also be utilized in variety of other solutions. 
  Example usage:
  ```
  /findClosest?specialization=Okulista&lat=52.241629599999996&lon=20.940932999999998
