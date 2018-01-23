@@ -4,8 +4,8 @@
  - Olaf Dygas
  - Radosław Panuszewski
  
- ## Purpose:
- The purpose of our solution is to provide the oppurtunity to find the most suitable medical point based on users' location (or any other given;) and medical specialization that fulfill their needs.
+ ## About the project
+ The purpose of our solution is to provide the oppurtunity to find the most suitable medical point based on users' location (or any other given) and medical specialization that fulfill their needs.
  
  Our REST API could also be utilized in variety of ther solutions. 
  Example usage:
