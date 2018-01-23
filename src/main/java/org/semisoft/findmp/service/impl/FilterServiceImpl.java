@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 public class FilterServiceImpl implements FilterService {
     @Override
     public List<MedicalPoint> filterBy(List<MedicalPoint> medicalPoints, Specialization specialization) {
-//        return medicalPoints
-//                .stream()
-//                .filter(m -> m.getSpecialization().equals(specialization))
-//                .collect(Collectors.toList());
-        return medicalPoints;
+        return medicalPoints
+                .stream()
+                .filter(m -> m.getSpecialization().getName().toLowerCase()
+                        .contains(specialization.getName().toLowerCase()))
+                .collect(Collectors.toList());
     }
 }
