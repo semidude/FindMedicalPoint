@@ -1,5 +1,5 @@
 # FindMedicalPoint
-## Team:
+## Team
  - Piotr Chachuła
  - Olaf Dygas
  - Radosław Panuszewski
@@ -16,7 +16,7 @@
  Supported countries:
  - Poland
  
- ## Implementation:
+ ## Implementation
  ![alt text](https://imageshack.com/a/img923/5241/0mlV8p.png)
  
  ## Compiling & Launching
