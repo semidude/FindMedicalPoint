@@ -73,6 +73,6 @@ public class ExpandableAreaServiceImpl implements ExpandableAreaService {
 
     @Override
     public int getMaxAreaSize() {
-        return Integer.MAX_VALUE;
+        return 121;
     }
 }

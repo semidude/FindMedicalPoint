@@ -34,7 +34,7 @@
             <input type = "text" placeholder="city" ng-model="addressSearch1.address.city" />
             <input type = "text" placeholder="street" ng-model="addressSearch1.address.street" />
             <input type = "text" placeholder="number" ng-model="addressSearch1.address.number" />
-            <button ng-click="vm.getLocation(); addressSearch1.address.city = vm.city; addressSearch1.address.street = vm.street; addressSearch1.address.number = vm.number" type="button" class="btn btn-default">Localize Me</button>
+            <button ng-click="vm.getLocation(); addressSearch1.address.city=vm.city; addressSearch1.address.street=vm.street; addressSearch1.address.number=vm.number" type="button" class="btn btn-default">Localize Me</button>
             <button ng-click="vm.findClosestByAddress(specializationSearch1.specialization.name, addressSearch1.address.city, addressSearch1.address.street, addressSearch1.address.number)" type="button" class="btn btn-default">Search</button>
 
             <table class="table">
