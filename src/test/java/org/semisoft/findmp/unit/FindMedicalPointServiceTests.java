@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         ExpandableAreaServiceTestConfiguration.class, //ExpandableAreaService fake
         FilterServiceTestConfiguration.class}) // FilterService fake
 @RunWith(SpringJUnit4ClassRunner.class)
+
 public class FindMedicalPointServiceTests {
 
     @MockBean
