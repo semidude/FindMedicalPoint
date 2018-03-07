@@ -72,14 +72,14 @@ public class FindMedicalPointServiceTests {
     }
 
     @Test
-	public void givenAB_WhenFindA_ThenAIsFound() {
+    public void givenAB_WhenFindA_ThenAIsFound() {
         prepareMedicalPoints("A", "B");
 
         List<MedicalPoint> foundPoints = findMedicalPoints("A");
 
         assertEquals(1, foundPoints.size());
         assertEquals(specMedicalPointMap.get("A"), foundPoints.get(0));
-	}
+    }
 
     @Test
     public void givenAB_WhenFindB_ThenBIsFound() {
