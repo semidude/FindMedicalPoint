@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @SpringBootApplication
-public class FindMedicalPointApplication
-{
-    public static void main(String[] args)
-    {
+public class FindMedicalPointApplication {
+
+    public static void main(String[] args) {
+
         SpringApplication.run(FindMedicalPointApplication.class, args);
     }
 }

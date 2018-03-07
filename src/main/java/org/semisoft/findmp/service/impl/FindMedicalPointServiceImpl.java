@@ -9,10 +9,12 @@ import org.semisoft.findmp.service.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
 @Service
 public class FindMedicalPointServiceImpl implements FindMedicalPointService {
+
     @Autowired
     private SectorService sectorService;
     @Autowired
@@ -26,9 +28,9 @@ public class FindMedicalPointServiceImpl implements FindMedicalPointService {
     private Specialization givenSpecialization;
 
     @Override
-    public List<MedicalPoint> findMedicalPoints(Specialization specialization, double latitude, double longitude, int count) {
+    public List<MedicalPoint> findMedicalPoints(Specialization specialization, Location userLocation, int count) {
 
-        userLocation = new Location(latitude, longitude);
+        this.userLocation = userLocation;
         givenSpecialization = specialization;
 
         List<MedicalPoint> medicalPoints = findAtLeastMedicalPoints(count);

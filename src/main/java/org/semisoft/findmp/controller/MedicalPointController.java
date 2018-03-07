@@ -142,16 +142,16 @@ public class MedicalPointController
     @RequestMapping("/findClosest")
     public @ResponseBody Iterable<MedicalPoint> findClosest(@RequestParam String specialization, @RequestParam double lat, @RequestParam double lon)
     {
-        //example path: http://localhost:8080/addmp?specialization=Okulista&lat=1&lon=1
-        return findMedicalPointService.findMedicalPoints(new Specialization(specialization), lat, lon, 5);
+        //example path: http://localhost:8080/findClosest?specialization=Okulista&lat=1&lon=1
+        return findMedicalPointService.findMedicalPoints(new Specialization(specialization), new Location(lat, lon), 5);
     }
     @RequestMapping("/findClosestByAddress")
     public @ResponseBody Iterable<MedicalPoint> findClosestByAddress(@RequestParam String specialization, @RequestParam String address)
     {
-        //example path: http://localhost:8080/addmp?specialization=Ortopeda&address=Warszawa;Ksiecia+Janusza;39
+        //example path: http://localhost:8080/findClosestByAddress?specialization=Ortopeda&address=Warszawa;Ksiecia+Janusza;39
         String[] addressParts = address.split(";");
         Address myAddress = new Address(addressParts[0], addressParts[1], addressParts[2]);
         Location myLocation = locationService.fromAddress(myAddress);
-        return findMedicalPointService.findMedicalPoints(new Specialization(specialization), myLocation.getLatitude(), myLocation.getLongitude(), 5);
+        return findMedicalPointService.findMedicalPoints(new Specialization(specialization), myLocation, 5);
     }
 }

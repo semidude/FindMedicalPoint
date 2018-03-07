@@ -5,10 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.semisoft.findmp.FindMedicalPointApplication;
-import org.semisoft.findmp.domain.Address;
-import org.semisoft.findmp.domain.MedicalPoint;
-import org.semisoft.findmp.domain.Sector;
-import org.semisoft.findmp.domain.Specialization;
+import org.semisoft.findmp.domain.*;
 import org.semisoft.findmp.domain.repository.MedicalPointRepository;
 import org.semisoft.findmp.service.FindMedicalPointService;
 import org.semisoft.findmp.service.MedicalPointService;
@@ -152,6 +149,6 @@ public class FindMedicalPointServiceTests {
 
     private List<MedicalPoint> findMedicalPoints(String spec, double lat, double lon) {
         return findMedicalPointService.findMedicalPoints(
-                new Specialization(spec), lat, lon, 5 );
+                new Specialization(spec), new Location(lat, lon), 5 );
     }
 }

@@ -3,8 +3,6 @@
 
     angular.module('app').controller('MedicalPointsController', MedicalPointsController);
 
-    //$scope.hello = "Goodbye world!";
-
     MedicalPointsController.$inject = ['$http'];
     function MedicalPointsController($http) {
         var vm =this;
@@ -73,7 +71,8 @@
 
         var x = document.getElementById("demo");
 
-        function getLocation() {
+        function getLocation()
+        {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
@@ -82,7 +81,8 @@
 
         }
 
-        function post(path, params, method) {
+        function post(path, params, method)
+        {
             method = method || "post"; // Set method to post by default if not specified.
 
             var form = document.createElement("form");
@@ -104,7 +104,8 @@
             form.submit();
         }
 
-        function showPosition(position) {
+        function showPosition(position)
+        {
 
             var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true"
             var degeocodePromise = $http.get(url);
@@ -114,8 +115,6 @@
                 vm.street = response.data.results[0].address_components[1].long_name;
                 vm.city = response.data.results[0].address_components[3].long_name;
             })
-
-            findClosest("Ortopeda", position.coords.latitude, position.coords.longitude);
         }
 
     }
