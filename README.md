@@ -29,7 +29,7 @@
       - Username: springuser
       - Password: ThePassword 
  - Run the application on server
- - In order to run the parser you need to go to the address /medicalPoints/parse
- - In order to localize medical points in temporary database go to /medicalPoints/sector
- - After it finishes working, in order to fill the main databese go to /medicalPoints/pars
- 
+ - Run the parser (which will store parsed data in a temporary database) via /medicalPoints/parse
+ - Get coordinates for each medical point stored in temporary database via /medicalPoints/sector
+ - After it finishes working, in order to fill up the main database use /medicalPoints/pars
+ - Go to the user or admin pages to check if everything works
