@@ -5,7 +5,7 @@
  - Radosław Panuszewski
  
  ## About the project
- The purpose of our solution is to provide the oppurtunity to find the most suitable medical point based on users' location (or any other given) and medical specialization that fulfill their needs.
+ The purpose of our solution is to provide an oppurtunity to find the most suitable medical point based on users' location (or any other given) and medical specialization that fulfill their needs.
  
  Our REST API could also be utilized in variety of other solutions. 
  Example usage:
@@ -24,7 +24,7 @@
  - Clone the repository to your local disc
  - Open the project in your favourite IDE
  - Configure Tomcat Server in your IDE
- - Set up a databese using MySQL with following parameters:
+ - Set up a databese using MySQL with following parameters (it is highly recommended to change them accordingly; those can be found in src/main/resources/application.properties):
       - Database name: db_example
       - Username: springuser
       - Password: ThePassword 
